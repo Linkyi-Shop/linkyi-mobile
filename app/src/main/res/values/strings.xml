@@ -1,6 +1,40 @@
 <resources>
     <string name="app_name">Linkyi Shop</string>
-    <string name="title_home">Home</string>
+    <string name="title_product">Product</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_linkyi">Linkyi</string>
+    <string name="title_profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_signup_page">Daftar</string>
+    <string name="subjudul">Buat Akun Terlebih dahulu</string>
+    <string name="name">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password\n</string>
+    <string name="signupButton">Daftar</string>
+    <string name="title_login_page">Masuk</string>
+    <string name="subjudul2">Masukan Email dan Password</string>
+    <string name="loginButton">Masuk</string>
+    <string name="login_with_google">Continue With Google</string>
+    <string name="forgot_password">Lupa Password ?</string>
+    <string name="or">Atau</string>
+    <string name="dont_have_account">Belum punya Akun?</string>
+    <string name="sign_up_text">Daftar</string>
+    <string name="have_account">Sudah punya akun?</string>
+    <string name="login_text">Masuk</string>
+    <string name="title_menu_1">Menu 1</string>
+    <string name="desc_menu_1">desc1</string>
+    <string name="title_menu_2">menu 2</string>
+    <string name="desc_menu_2">desc2</string>
+    <string name="title_menu_3">menu 3</string>
+    <string name="desc_menu_3">desc3</string>
+    <string name="title_menu_4">menu 4</string>
+    <string name="desc_menu_4">desc4</string>
+    <string name="learn_now">learn now</string>
+    <string name="title_welcome_page">Selamat Datang di Linkyi Shop</string>
+    <string name="message_welcome_page">Linkyi Shop Teman UMKM</string>
+    <string name="otp_verification">Masukan Kode OTP</string>
+    <string name="verifikasi">Verifikasi\n</string>
+    <string name="resend_otp">Kirim Ulang</string>
+
 </resources>
