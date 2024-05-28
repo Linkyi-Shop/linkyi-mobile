@@ -73,7 +73,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun validateInput(name: String, email: String, password: String): Boolean {
         if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            showError("All fields are required")
+            showError(getString(R.string.validasiRegister))
             return false
         }
         return true

@@ -41,7 +41,7 @@ class OtpVerifActivity : AppCompatActivity() {
             if (otpCode != null) {
                 viewModel.verifyOtp(otpCode, email)
             } else {
-                showError("Please enter a valid OTP")
+                showError(getString(R.string.errorOTP))
             }
         }
 
