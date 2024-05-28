@@ -22,8 +22,8 @@ class UserRepository private constructor(private val pref: UserPreference, priva
         return apiServices.login(email, password)
     }
 
-    suspend fun otpVerification(code: Int) : OTPResponse {
-        return apiServices.OTP(code)
+    suspend fun otpVerification(code: Int, email: String?) : OTPResponse {
+        return apiServices.OTP(code, email)
     }
 
     suspend fun saveUserToken(token: String) {
