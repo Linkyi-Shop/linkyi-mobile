@@ -46,15 +46,8 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.loginResult.observe(this, { result ->
             result.onSuccess { response ->
-                if (response.success == true && response.loginResult?.isActive == true) {
-                    // Simpan token dan navigasi ke halaman utama setelah berhasil login
-                    response.loginResult.token?.let { token ->
-                        viewModel.saveUserToken(token.toString())
-                        navigateToMainScreen()
-                    }
-                } else {
-                    showError(response.message ?: "Login failed")
-                }
+                viewModel.saveUserToken(response.loginResult?.token.toString())
+                navigateToMainScreen()
             }.onFailure {
                 // Tampilkan pesan error
                 showError(it.message)
