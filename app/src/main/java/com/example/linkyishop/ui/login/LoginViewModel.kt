@@ -1,5 +1,6 @@
 package com.example.linkyishop.ui.login
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,6 +25,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
     }
 
     fun saveUserToken(token: String) {
+        Log.d("LoginViewModel", "Saving token: $token")
         viewModelScope.launch {
             repository.saveUserToken(token)
         }

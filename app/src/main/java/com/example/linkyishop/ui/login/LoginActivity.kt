@@ -2,6 +2,7 @@ package com.example.linkyishop.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -46,34 +47,31 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.loginResult.observe(this, { result ->
             result.onSuccess { response ->
-                if (response.success == true && response.loginResult?.isActive == true) {
-                    // Simpan token dan navigasi ke halaman utama setelah berhasil login
-                    response.loginResult.token?.let { token ->
-                        viewModel.saveUserToken(token.toString())
+                Log.d("LoginActivity", "Response: $response")
+                if (response.success == true) {
                         navigateToMainScreen()
-                    }
                 } else {
-                    showError(response.message ?: "Login failed")
+                    showError(response.message ?: "Login gagal")
                 }
             }.onFailure {
-                // Tampilkan pesan error
                 showError(it.message)
             }
         })
     }
 
+    private fun navigateToMainScreen() {
+        Log.d("LoginActivity", "Navigating to MainActivity")
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     private fun validateInput(email: String, password: String): Boolean {
         if (email.isEmpty() || password.isEmpty()) {
-            showError("Email and password are required")
+            showError("Email dan password harus diisi")
             return false
         }
         return true
-    }
-
-    private fun navigateToMainScreen() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 
     private fun showError(message: String?) {

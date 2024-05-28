@@ -80,12 +80,12 @@ class OtpVerifActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun start(context: Context) {
-            val intent = Intent(context, OtpVerifActivity::class.java)
-            context.startActivity(intent)
-        }
+//        fun start(context: Context) {
+//            val intent = Intent(context, OtpVerifActivity::class.java)
+//            context.startActivity(intent)
+//        }
 
-        const val EXTRA_EMAIL = "eue"
+        const val EXTRA_EMAIL = "extra_email"
     }
 
 }
