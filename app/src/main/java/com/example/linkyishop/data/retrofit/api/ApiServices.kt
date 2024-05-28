@@ -26,6 +26,7 @@ interface ApiServices {
     @FormUrlEncoded
     @POST("auth/otp-confirmation")
     suspend fun OTP(
-        @Field("code") code: Int
+        @Field("code") code: Int,
+        @Field("email") email: String?
     ): OTPResponse
 }

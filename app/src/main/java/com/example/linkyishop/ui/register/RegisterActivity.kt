@@ -1,5 +1,6 @@
 package com.example.linkyishop.ui.register
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -14,6 +15,7 @@ import com.example.linkyishop.ui.otp.OtpVerifActivity
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
+    private lateinit var email: String
 
     private val viewModel by viewModels<RegisterViewModel> {
         ViewModelFactory.getInstance(this)
@@ -38,7 +40,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun setupRegister() {
         binding.signupButton.setOnClickListener {
             val name = binding.nameEditText.text.toString().trim()
-            val email = binding.emailEditText.text.toString().trim()
+            email = binding.emailEditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString().trim()
 
             if (validateInput(name, email, password)) {
@@ -50,7 +52,7 @@ class RegisterActivity : AppCompatActivity() {
             result.onSuccess { response ->
                 if (response.success == true) {
                     // Tidak perlu memeriksa registerResult.email karena data adalah array kosong
-                    navigateToOtpScreen()  // Ubah navigasi ke OTP tanpa parameter email
+                    navigateToOtpScreen(email)  // Ubah navigasi ke OTP tanpa parameter email
                 } else {
                     // Registrasi gagal
                     showError(response.message ?: "Registration failed. Please try again.")
@@ -62,8 +64,11 @@ class RegisterActivity : AppCompatActivity() {
         })
     }
 
-    private fun navigateToOtpScreen() {
-        OtpVerifActivity.start(this)
+    private fun navigateToOtpScreen(email: String) {
+        val intent = Intent(this@RegisterActivity, OtpVerifActivity::class.java)
+        intent.putExtra(OtpVerifActivity.EXTRA_EMAIL, email)
+        startActivity(intent)
+//        OtpVerifActivity.start(this)
     }
 
     private fun validateInput(name: String, email: String, password: String): Boolean {
