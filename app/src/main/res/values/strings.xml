@@ -36,5 +36,7 @@
     <string name="otp_verification">Masukan Kode OTP</string>
     <string name="verifikasi">Verifikasi\n</string>
     <string name="resend_otp">Kirim Ulang</string>
+    <string name="errorOTP">Kode OTP tidak valid</string>
+    <string name="validasiRegister">Semua Kolom harus diisi</string>
 
 </resources>

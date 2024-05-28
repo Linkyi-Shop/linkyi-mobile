@@ -12,10 +12,10 @@ class OtpViewModel(private val repository: UserRepository) : ViewModel() {
     private val _otpResult = MutableLiveData<Result<OTPResponse>>()
     val otpResult: LiveData<Result<OTPResponse>> = _otpResult
 
-    fun verifyOtp(code: Int) {
+    fun verifyOtp(code: Int, email: String?) {
         viewModelScope.launch {
             try {
-                val response = repository.otpVerification(code)
+                val response = repository.otpVerification(code, email)
                 _otpResult.value = Result.success(response)
             } catch (e: Exception) {
                 _otpResult.value = Result.failure(e)

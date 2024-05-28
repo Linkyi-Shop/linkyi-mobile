@@ -34,14 +34,14 @@ class OtpVerifActivity : AppCompatActivity() {
         }
 
         // Dapatkan email dari Intent
-//        val email = intent.getStringExtra(EXTRA_EMAIL) ?: return
+        val email = intent.getStringExtra(EXTRA_EMAIL)
 
         binding.btnVerify.setOnClickListener {
             val otpCode = getOtpCode()
             if (otpCode != null) {
-                viewModel.verifyOtp(otpCode)
+                viewModel.verifyOtp(otpCode, email)
             } else {
-                showError("Please enter a valid OTP")
+                showError(getString(R.string.errorOTP))
             }
         }
 
@@ -80,10 +80,12 @@ class OtpVerifActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun start(context: Context) {
-            val intent = Intent(context, OtpVerifActivity::class.java)
-            context.startActivity(intent)
-        }
+//        fun start(context: Context) {
+//            val intent = Intent(context, OtpVerifActivity::class.java)
+//            context.startActivity(intent)
+//        }
+
+        const val EXTRA_EMAIL = "extra_email"
     }
 
 }
