@@ -69,6 +69,7 @@ class RegisterActivity : AppCompatActivity() {
         intent.putExtra(OtpVerifActivity.EXTRA_EMAIL, email)
         startActivity(intent)
 //        OtpVerifActivity.start(this)
+        // Testing
     }
 
     private fun validateInput(name: String, email: String, password: String): Boolean {
