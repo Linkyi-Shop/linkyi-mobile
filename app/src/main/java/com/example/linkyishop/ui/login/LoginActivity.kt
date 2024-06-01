@@ -12,6 +12,7 @@ import com.example.linkyishop.ui.main.MainActivity
 import com.example.linkyishop.R
 import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.databinding.ActivityLoginBinding
+import com.example.linkyishop.ui.lupaPassword.LupaPasswordActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -26,6 +27,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupLogin()
+
+        binding.forgotPasswordTextView.setOnClickListener {
+            // Tambahkan kode navigasi ke halaman lupa password di sini
+            navigateToForgotPassword()
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -67,6 +73,11 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun navigateToForgotPassword() {
+        val intent = Intent(this, LupaPasswordActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showError(message: String?) {

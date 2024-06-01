@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.linkyishop.data.repository.UserRepository
 import com.example.linkyishop.di.Injection
 import com.example.linkyishop.ui.login.LoginViewModel
+import com.example.linkyishop.ui.lupaPassword.LupaPasswordViewModel
 import com.example.linkyishop.ui.main.MainViewModel
+import com.example.linkyishop.ui.newPassword.NewPasswordViewModel
 import com.example.linkyishop.ui.otp.OtpViewModel
 import com.example.linkyishop.ui.register.RegisterViewModel
 
@@ -25,6 +27,12 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(LupaPasswordViewModel::class.java) -> {
+                LupaPasswordViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(NewPasswordViewModel::class.java) -> {
+                NewPasswordViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

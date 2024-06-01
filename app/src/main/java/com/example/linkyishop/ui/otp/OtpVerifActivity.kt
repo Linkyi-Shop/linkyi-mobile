@@ -45,10 +45,24 @@ class OtpVerifActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnResendOtp.setOnClickListener {
+            viewModel.resendOtp(email)
+        }
+
         viewModel.otpResult.observe(this, { result ->
             result.onSuccess {
                 // Navigasi ke halaman utama setelah berhasil verifikasi OTP
                 navigateToMainScreen()
+            }.onFailure {
+                // Tampilkan pesan error
+                showError(it.message)
+            }
+        })
+
+        viewModel.resendOtpResult.observe(this, { result ->
+            result.onSuccess {
+                // Tampilkan pesan sukses mengirim ulang OTP
+                Toast.makeText(this, it.message ?: getString(R.string.otp_resent), Toast.LENGTH_SHORT).show()
             }.onFailure {
                 // Tampilkan pesan error
                 showError(it.message)
@@ -80,11 +94,6 @@ class OtpVerifActivity : AppCompatActivity() {
     }
 
     companion object {
-//        fun start(context: Context) {
-//            val intent = Intent(context, OtpVerifActivity::class.java)
-//            context.startActivity(intent)
-//        }
-
         const val EXTRA_EMAIL = "extra_email"
     }
 
