@@ -21,9 +21,9 @@ class UserRepository private constructor(private val pref: UserPreference, priva
         return apiServices.register(name, email, password)
     }
 
-    suspend fun login(email: String, password: String) : LoginResponse {
-        return apiServices.login(email, password)
-    }
+//    suspend fun login(email: String, password: String) : LoginResponse {
+//        return apiServices.login(email, password)
+//    }
 
     suspend fun otpVerification(code: Int, email: String?) : OTPResponse {
         return apiServices.OTP(code, email)
@@ -43,6 +43,12 @@ class UserRepository private constructor(private val pref: UserPreference, priva
 
     suspend fun saveUserToken(token: String) {
         pref.saveToken(token)
+    }
+    suspend fun deleteToken() {
+        pref.deleteToken()
+    }
+    suspend fun getUserToken(): String {
+       return pref.getUserToken()
     }
 
     companion object {

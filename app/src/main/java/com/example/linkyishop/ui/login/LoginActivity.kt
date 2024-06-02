@@ -2,6 +2,7 @@ package com.example.linkyishop.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -13,6 +14,7 @@ import com.example.linkyishop.R
 import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.databinding.ActivityLoginBinding
 import com.example.linkyishop.ui.lupaPassword.LupaPasswordActivity
+import com.example.linkyishop.ui.welcome.WelcomeActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -50,15 +52,10 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.loginResult.observe(this, { result ->
-            result.onSuccess { response ->
-                viewModel.saveUserToken(response.loginResult?.token.toString())
-                navigateToMainScreen()
-            }.onFailure {
-                // Tampilkan pesan error
-                showError(it.message)
-            }
-        })
+        viewModel.loginResult.observe(this) {
+            viewModel.saveUserToken(it.token)
+            navigateToMainScreen()
+        }
     }
 
     private fun validateInput(email: String, password: String): Boolean {
@@ -71,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun navigateToMainScreen() {
         val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
     }

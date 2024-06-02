@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.example.linkyishop.BuildConfig
 import com.example.linkyishop.data.preferences.UserPreference
 import com.example.linkyishop.data.preferences.dataStore
+import com.example.linkyishop.data.repository.UserRepository
 import com.example.linkyishop.data.retrofit.api.ApiConfig
 import com.example.linkyishop.data.retrofit.api.ApiServices
 import com.example.linkyishop.data.retrofit.response.DataItem
@@ -20,25 +21,22 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ProductViewModel(application: Application) :  AndroidViewModel(application) {
+class ProductViewModel(private val repository: UserRepository) : ViewModel() {
 
     private val _listProduct = MutableLiveData<Event<List<DataItem?>?>>()
     val listProduct: LiveData<Event<List<DataItem?>?>> = _listProduct
 
-    init {
-        // Panggil API dengan token
-        val token = UserPreference.TOKEN_KEY
-        val client = ApiConfig.getApiService().getProducts("Bearer $token")
-        client.enqueue(object : Callback<List<DataItem>> {
-            override fun onResponse(call: Call<List<DataItem>>, response: Response<List<DataItem>>) {
-                if (response.isSuccessful) {
-                    _listProduct.value = Event(response.body())
-                }
+    suspend fun getProducts(){
+        try {
+            val token = repository.getUserToken()
+            val response = ApiConfig.getApiService().getProducts("Bearer $token")
+            if (response.isSuccessful) {
+                _listProduct.postValue(Event(response.body()))
+            } else {
+                Log.e("Products", "Error: ${response.message()}")
             }
-
-            override fun onFailure(call: Call<List<DataItem>>, t: Throwable) {
-                Log.e("Products", "onFailure: ${t.message.toString()}")
-            }
-        })
+        } catch (e: Exception) {
+            Log.e("Products", "Exception: ${e.message.toString()}")
+        }
     }
 }

@@ -9,6 +9,7 @@ import com.example.linkyishop.data.retrofit.response.OTPResponse
 import com.example.linkyishop.data.retrofit.response.RegisterResponse
 import com.example.linkyishop.data.retrofit.response.ResendOtpResponse
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -26,10 +27,10 @@ interface ApiServices {
 
     @FormUrlEncoded
     @POST("auth/login")
-    suspend fun login(
+    fun login(
         @Field("email") email: String,
         @Field("password") password: String
-    ): LoginResponse
+    ): Call<LoginResponse>
 
     @FormUrlEncoded
     @POST("auth/otp-confirmation")
@@ -59,7 +60,7 @@ interface ApiServices {
     ): NewPassword2Response
 
     @GET("/dashboard/products/")
-    fun getProducts(
+    suspend fun getProducts(
         @Header("Authorization") token: String
-    ): Call<List<DataItem>>
+    ): Response<List<DataItem>>
 }

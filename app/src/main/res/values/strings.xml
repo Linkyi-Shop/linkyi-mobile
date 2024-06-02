@@ -43,5 +43,6 @@
     <string name="lupa_password">Lupa Password</string>
     <string name="kembali_ke_login">Kembali</string>
     <string name="fab_content_desc">Tambah Product</string>
+    <string name="logout">Logout</string>
 
 </resources>
