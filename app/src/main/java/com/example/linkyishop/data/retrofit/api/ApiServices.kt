@@ -1,5 +1,6 @@
 package com.example.linkyishop.data.retrofit.api
 
+import com.example.linkyishop.data.retrofit.response.DataItem
 import com.example.linkyishop.data.retrofit.response.LoginResponse
 import com.example.linkyishop.data.retrofit.response.LupaPasswordResponse
 import com.example.linkyishop.data.retrofit.response.NewPassword2Response
@@ -7,8 +8,11 @@ import com.example.linkyishop.data.retrofit.response.NewPasswordResponse
 import com.example.linkyishop.data.retrofit.response.OTPResponse
 import com.example.linkyishop.data.retrofit.response.RegisterResponse
 import com.example.linkyishop.data.retrofit.response.ResendOtpResponse
+import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface ApiServices {
@@ -53,4 +57,9 @@ interface ApiServices {
         @Field("confirm_password") confirmPassword: String,
         @Field("reset_pass_token") otp: Int
     ): NewPassword2Response
+
+    @GET("/dashboard/products/")
+    fun getProducts(
+        @Header("Authorization") token: String
+    ): Call<List<DataItem>>
 }

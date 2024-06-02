@@ -11,6 +11,7 @@ import com.example.linkyishop.ui.lupaPassword.LupaPasswordViewModel
 import com.example.linkyishop.ui.main.MainViewModel
 import com.example.linkyishop.ui.newPassword.NewPasswordViewModel
 import com.example.linkyishop.ui.otp.OtpViewModel
+import com.example.linkyishop.ui.product.ProductViewModel
 import com.example.linkyishop.ui.register.RegisterViewModel
 
 class ViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
@@ -36,6 +37,9 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
                 NewPasswordViewModel(repository) as T
             }
             modelClass.isAssignableFrom(DetailProductViewModel::class.java) -> {
+                DetailProductViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(ProductViewModel::class.java) -> {
                 DetailProductViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
