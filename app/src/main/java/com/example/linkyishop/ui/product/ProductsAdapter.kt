@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.linkyishop.R
 import com.example.linkyishop.data.retrofit.response.DataItem
 import com.example.linkyishop.databinding.ProductsCardBinding
+import com.example.linkyishop.ui.detailProduct.DetailProductActivity
 
 class ProductsAdapter(private val context: Context) : ListAdapter<DataItem, ProductsAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
@@ -43,6 +44,15 @@ class ProductsAdapter(private val context: Context) : ListAdapter<DataItem, Prod
                 .load(products.thumbnail)
                 .placeholder(R.drawable.linkyi_logo)
                 .into(binding.profileImageView)
+
+            binding.root.setOnClickListener {
+                val intent = Intent(context, DetailProductActivity::class.java).apply {
+                    putExtra("PRODUCT_IMAGE", products.thumbnail)
+                    putExtra("PRODUCT_NAME", products.title)
+                    putExtra("PRODUCT_PRICE", products.price.toString())
+                }
+                context.startActivity(intent)
+            }
 
 //            binding.cardView.setOnClickListener{
 //                val intent = Intent(context, UserDetailActivity::class.java)
