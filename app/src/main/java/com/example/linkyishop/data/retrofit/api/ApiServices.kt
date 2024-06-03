@@ -6,6 +6,7 @@ import com.example.linkyishop.data.retrofit.response.LupaPasswordResponse
 import com.example.linkyishop.data.retrofit.response.NewPassword2Response
 import com.example.linkyishop.data.retrofit.response.NewPasswordResponse
 import com.example.linkyishop.data.retrofit.response.OTPResponse
+import com.example.linkyishop.data.retrofit.response.ProductsResponse
 import com.example.linkyishop.data.retrofit.response.RegisterResponse
 import com.example.linkyishop.data.retrofit.response.ResendOtpResponse
 import retrofit2.Call
@@ -59,8 +60,8 @@ interface ApiServices {
         @Field("reset_pass_token") otp: Int
     ): NewPassword2Response
 
-    @GET("/dashboard/products/")
+    @GET("dashboard/products/")
     suspend fun getProducts(
         @Header("Authorization") token: String
-    ): Response<List<DataItem>>
+    ): Response<ProductsResponse>
 }
