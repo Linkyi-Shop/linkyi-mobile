@@ -31,8 +31,8 @@ class ProductViewModel(private val repository: UserRepository) : ViewModel() {
             val token = repository.getUserToken()
             val response = ApiConfig.getApiService().getProducts("Bearer $token")
             if (response.isSuccessful) {
-                _listProduct.postValue(response.body()?.data?.links?.data)
-                Log.e("Products", "Isi: ${response.body()?.data?.links?.data}")
+                _listProduct.postValue(response.body()?.data?.products?.data)
+                Log.e("Products", "Isi: ${response.body()?.data?.products?.data}")
             } else {
                 Log.e("Products", "Error: ${response.message()}")
             }

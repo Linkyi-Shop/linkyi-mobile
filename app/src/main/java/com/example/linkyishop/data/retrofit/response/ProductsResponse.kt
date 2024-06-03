@@ -40,7 +40,7 @@ data class DataItem(
 ) : Parcelable
 
 @Parcelize
-data class Links(
+data class Products(
 
 	@field:SerializedName("per_page")
 	val perPage: Int? = null,
@@ -85,8 +85,8 @@ data class Links(
 @Parcelize
 data class Data(
 
-	@field:SerializedName("links")
-	val links: Links? = null
+	@field:SerializedName("products")
+	val products: Products? = null
 ) : Parcelable
 
 @Parcelize
