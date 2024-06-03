@@ -1,24 +1,27 @@
 package com.example.linkyishop.data.retrofit.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class LoginResponse(
 
-	@field:SerializedName("loginResult")
-	val loginResult: LoginResult? = null,
+	@field:SerializedName("data")
+	val data: DataLogin,
 
 	@field:SerializedName("success")
 	val success: Boolean? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null
-)
-
-data class LoginResult (
+) : Parcelable
+@Parcelize
+data class DataLogin (
 
 	@field:SerializedName("is_active")
-	val isActive: Boolean? = null,
+	val isActive: Boolean,
 
 	@field:SerializedName("token")
-	val token: Any? = null
-)
+	val token: String
+) : Parcelable
