@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.example.linkyishop.R
 import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.databinding.ActivityDetailProductBinding
@@ -31,5 +32,16 @@ class DetailProductActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val productImage = intent.getStringExtra("PRODUCT_IMAGE")
+        val productName = intent.getStringExtra("PRODUCT_NAME")
+        val productPrice = intent.getStringExtra("PRODUCT_PRICE")
+
+        // Display product data
+        Glide.with(this)
+            .load(productImage)
+            .into(binding.productImage)
+        binding.productName.text = productName
+        binding.productPrice.text = productPrice
     }
 }
