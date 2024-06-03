@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.data.retrofit.response.DataItem
@@ -47,11 +48,11 @@ class ProductFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getProducts()
+            viewModel.listProduct.observe(viewLifecycleOwner) { productsList ->
+                setUsersData(productsList)
+            }
         }
 
-        viewModel.listProduct.observe(viewLifecycleOwner) { productsList ->
-            setUsersData(productsList.getContentIfNotHandled())
-        }
 //        viewModel.isLoading.observe(viewLifecycleOwner) {
 //            showLoading(it)
 //        }
@@ -68,7 +69,7 @@ class ProductFragment : Fragment() {
 
     private fun setUsersData(usersList: List<DataItem?>?) {
         val adapter = ProductsAdapter(requireContext())
-        binding.rvProducts.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvProducts.layoutManager = GridLayoutManager(requireContext(), 2)
         adapter.submitList(usersList)
         binding.rvProducts.adapter = adapter
     }
