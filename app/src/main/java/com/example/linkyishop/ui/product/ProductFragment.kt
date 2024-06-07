@@ -1,5 +1,6 @@
 package com.example.linkyishop.ui.product
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -53,6 +54,10 @@ class ProductFragment : Fragment() {
             }
         }
 
+        binding.floatingActionButton.setOnClickListener {
+            navigateToAddProduct()
+        }
+
 //        viewModel.isLoading.observe(viewLifecycleOwner) {
 //            showLoading(it)
 //        }
@@ -72,6 +77,11 @@ class ProductFragment : Fragment() {
         binding.rvProducts.layoutManager = GridLayoutManager(requireContext(), 2)
         adapter.submitList(usersList)
         binding.rvProducts.adapter = adapter
+    }
+
+    private fun navigateToAddProduct() {
+        val intent = Intent(requireContext(), AddProductActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onDestroyView() {
