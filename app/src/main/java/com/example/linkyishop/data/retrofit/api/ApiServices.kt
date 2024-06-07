@@ -1,21 +1,23 @@
 package com.example.linkyishop.data.retrofit.api
 
-import com.example.linkyishop.data.retrofit.response.DataItem
 import com.example.linkyishop.data.retrofit.response.LoginResponse
 import com.example.linkyishop.data.retrofit.response.LupaPasswordResponse
 import com.example.linkyishop.data.retrofit.response.NewPassword2Response
-import com.example.linkyishop.data.retrofit.response.NewPasswordResponse
 import com.example.linkyishop.data.retrofit.response.OTPResponse
 import com.example.linkyishop.data.retrofit.response.ProductsResponse
 import com.example.linkyishop.data.retrofit.response.RegisterResponse
 import com.example.linkyishop.data.retrofit.response.ResendOtpResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 
 interface ApiServices {
     @FormUrlEncoded
@@ -63,5 +65,17 @@ interface ApiServices {
     @GET("dashboard/products/")
     suspend fun getProducts(
         @Header("Authorization") token: String
+    ): Response<ProductsResponse>
+
+    @Multipart
+    @POST("dashboard/products/create")
+    suspend fun addProduct(
+        @Header("Authorization") token: String,
+        @Part("title") title: RequestBody,
+        @Part("price") price: RequestBody,
+        @Part("category") category: RequestBody,
+        @Part thumbnail: MultipartBody.Part,
+        @Part("isActive") isActive: RequestBody,
+        @Part("links") links: List<RequestBody>
     ): Response<ProductsResponse>
 }

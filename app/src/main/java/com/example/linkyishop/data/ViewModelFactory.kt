@@ -12,6 +12,7 @@ import com.example.linkyishop.ui.lupaPassword.LupaPasswordViewModel
 import com.example.linkyishop.ui.main.MainViewModel
 import com.example.linkyishop.ui.newPassword.NewPasswordViewModel
 import com.example.linkyishop.ui.otp.OtpViewModel
+import com.example.linkyishop.ui.product.AddProductViewModel
 import com.example.linkyishop.ui.product.ProductViewModel
 import com.example.linkyishop.ui.register.RegisterViewModel
 
@@ -42,6 +43,9 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(ProductViewModel::class.java) -> {
                 ProductViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(AddProductViewModel::class.java) -> {
+                AddProductViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
