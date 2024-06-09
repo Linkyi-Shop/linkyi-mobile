@@ -63,14 +63,14 @@ class AddProductActivity : AppCompatActivity() {
         }
 
 
-        viewModel.message.observe(this, { result ->
-            if (result.toBoolean()) {
-                showToast("Product added successfully")
-                finish()
-            } else {
-                showToast("Failed to add product")
-            }
-        })
+//        viewModel.addProductResult.observe(this, { result ->
+//            if (result.isSuccess) {
+//                showToast("Product added successfully")
+//                finish()
+//            } else {
+//                showToast("Failed to add product: ${result.exceptionOrNull()?.message}")
+//            }
+//        })
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -196,6 +196,7 @@ class AddProductActivity : AppCompatActivity() {
             // Melakukan pengiriman data ke ViewModel untuk proses tambah produk
             lifecycleScope.launch {
                 viewModel.addProduct(title, price, category, multipartBody, isActive, linksArray)
+                finish()
             }
         }
     }
