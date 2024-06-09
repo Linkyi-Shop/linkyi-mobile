@@ -75,4 +75,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0")
     implementation("androidx.activity:activity-ktx:1.9.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    //tags input
+    implementation ("com.nex3z:flow-layout:1.3.3")
+
 }

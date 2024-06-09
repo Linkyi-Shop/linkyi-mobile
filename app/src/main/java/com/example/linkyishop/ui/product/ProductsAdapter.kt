@@ -49,7 +49,7 @@ class ProductsAdapter(private val context: Context) : ListAdapter<DataItem, Prod
                 val intent = Intent(context, DetailProductActivity::class.java).apply {
                     putExtra("PRODUCT_IMAGE", products.thumbnail)
                     putExtra("PRODUCT_NAME", products.title)
-                    putExtra("PRODUCT_PRICE", products.price.toString())
+                    putExtra("PRODUCT_PRICE", products.price)
                 }
                 context.startActivity(intent)
             }
