@@ -44,5 +44,10 @@
     <string name="kembali_ke_login">Kembali</string>
     <string name="fab_content_desc">Tambah Product</string>
     <string name="logout">Logout</string>
+    <string name="nama">Nama Produk</string>
+    <string name="harga">Harga Barang</string>
+    <string name="kategori">Kategori Produk</string>
+    <string name="links">Link (tekan enter untuk terus menambahkan)</string>
+    <string name="aktivasi">Aktivasi</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.example.linkyishop.data.retrofit.api
 
+import com.example.linkyishop.data.retrofit.response.AddProductResponse
 import com.example.linkyishop.data.retrofit.response.LoginResponse
 import com.example.linkyishop.data.retrofit.response.LupaPasswordResponse
 import com.example.linkyishop.data.retrofit.response.NewPassword2Response
@@ -74,8 +75,8 @@ interface ApiServices {
         @Part("title") title: RequestBody,
         @Part("price") price: RequestBody,
         @Part("category") category: RequestBody,
-        @Part thumbnail: MultipartBody.Part,
-        @Part("isActive") isActive: RequestBody,
-        @Part("links") links: List<RequestBody>
-    ): Response<ProductsResponse>
+        @Part file: MultipartBody.Part,
+        @Part("is_active") isActive: RequestBody,
+        @Part links: List<MultipartBody.Part>
+    ): AddProductResponse
 }

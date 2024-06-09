@@ -27,7 +27,7 @@ data class DataItem(
 	val isActive: Boolean? = null,
 
 	@field:SerializedName("price")
-	val price: Int? = null,
+	val price: String? = null,
 
 	@field:SerializedName("id")
 	val id: String? = null,
