@@ -8,22 +8,16 @@ import com.example.linkyishop.data.repository.UserRepository
 import com.example.linkyishop.data.retrofit.api.ApiConfig
 import com.example.linkyishop.data.retrofit.response.AddProductResponse
 import com.example.linkyishop.data.retrofit.response.ProductsResponse
-import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.HttpException
 import java.io.File
 
 class AddProductViewModel(private val repository: UserRepository) : ViewModel() {
-
-    private val _message = MutableLiveData<String?>()
-    val message: LiveData<String?> = _message
-
-    private val _success = MutableLiveData<Boolean?>()
-    val success: LiveData<Boolean?> = _success
+    private val _addProductResult = MutableLiveData<Result<AddProductResponse>>()
+    val addProductResult: LiveData<Result<AddProductResponse>> = _addProductResult
 
     suspend fun addProduct(
         title: String,
@@ -46,12 +40,15 @@ class AddProductViewModel(private val repository: UserRepository) : ViewModel() 
             val response = ApiConfig.getApiService().addProduct(
                 "Bearer $token", titlePart, pricePart, categoryPart, thumbnail, isActivePart, linksParts
             )
-            _success.value = response.success
-            Log.e("AddProduct", "Success: ${response.message}")
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, AddProductResponse::class.java)
-            _message.value = errorResponse.message
+            if (response.isSuccessful) {
+                _addProductResult.postValue(Result.success(response.body()!!))
+                Log.e("AddProduct", "Success: ${response.body()}")
+            } else {
+                _addProductResult.postValue(Result.failure(Exception(response.message())))
+                Log.e("AddProduct", "Error: ${response.message()}")
+            }
+        } catch (e: Exception) {
+            _addProductResult.postValue(Result.failure(e))
             Log.e("AddProduct", "Exception: ${e.message.toString()}")
         }
     }

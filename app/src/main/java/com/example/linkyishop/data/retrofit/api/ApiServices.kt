@@ -78,5 +78,5 @@ interface ApiServices {
         @Part file: MultipartBody.Part,
         @Part("is_active") isActive: RequestBody,
         @Part links: List<MultipartBody.Part>
-    ): AddProductResponse
+    ): Response<AddProductResponse>
 }
