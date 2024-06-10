@@ -34,7 +34,7 @@
     <string name="title_welcome_page">Selamat Datang di Linkyi Shop</string>
     <string name="message_welcome_page">Linkyi Shop Teman UMKM</string>
     <string name="otp_verification">Masukan Kode OTP</string>
-    <string name="verifikasi">Verifikasi\n</string>
+    <string name="verifikasi">Verifikasi</string>
     <string name="resend_otp">Kirim Ulang</string>
     <string name="errorOTP">Kode OTP tidak valid</string>
     <string name="validasiRegister">Semua Kolom harus diisi</string>

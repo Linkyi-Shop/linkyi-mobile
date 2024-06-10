@@ -13,6 +13,7 @@ import com.example.linkyishop.data.repository.UserRepository
 import com.example.linkyishop.data.retrofit.api.ApiConfig
 import com.example.linkyishop.data.retrofit.api.ApiServices
 import com.example.linkyishop.data.retrofit.response.DataItem
+import com.example.linkyishop.data.retrofit.response.Products
 import com.example.linkyishop.utils.Event
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
@@ -23,16 +24,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ProductViewModel(private val repository: UserRepository) : ViewModel() {
 
-    private val _listProduct = MutableLiveData<List<DataItem?>?>()
-    val listProduct: LiveData<List<DataItem?>?> = _listProduct
+    private val _listProduct = MutableLiveData<Products>()
+    val listProduct: LiveData<Products> get() = _listProduct
 
-    suspend fun getProducts(){
+    suspend fun getProducts() {
         try {
             val token = repository.getUserToken()
             val response = ApiConfig.getApiService().getProducts("Bearer $token")
             if (response.isSuccessful) {
-                _listProduct.postValue(response.body()?.data?.products?.data)
-                Log.e("Products", "Isi: ${response.body()?.data?.products?.data}")
+                val products = response.body()?.data?.products
+                if (products != null) {
+                    _listProduct.postValue(products!!)
+                    Log.e("Products", "Isi: $products")
+                } else {
+                    Log.e("Products", "Data produk null")
+                }
             } else {
                 Log.e("Products", "Error: ${response.message()}")
             }

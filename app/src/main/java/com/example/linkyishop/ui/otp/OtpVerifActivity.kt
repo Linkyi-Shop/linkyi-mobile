@@ -1,8 +1,9 @@
 package com.example.linkyishop.ui.otp
 
-import android.content.Context
+
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -47,9 +48,10 @@ class OtpVerifActivity : AppCompatActivity() {
 
         binding.btnResendOtp.setOnClickListener {
             viewModel.resendOtp(email)
+            true.showLoading()
         }
 
-        viewModel.otpResult.observe(this, { result ->
+        viewModel.otpResult.observe(this) { result ->
             result.onSuccess {
                 // Navigasi ke halaman utama setelah berhasil verifikasi OTP
                 navigateToMainScreen()
@@ -57,17 +59,21 @@ class OtpVerifActivity : AppCompatActivity() {
                 // Tampilkan pesan error
                 showError(it.message)
             }
-        })
+        }
 
-        viewModel.resendOtpResult.observe(this, { result ->
+        viewModel.resendOtpResult.observe(this) { result ->
             result.onSuccess {
                 // Tampilkan pesan sukses mengirim ulang OTP
-                Toast.makeText(this, it.message ?: getString(R.string.otp_resent), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    it.message ?: getString(R.string.otp_resent),
+                    Toast.LENGTH_SHORT
+                ).show()
             }.onFailure {
                 // Tampilkan pesan error
                 showError(it.message)
             }
-        })
+        }
     }
 
     private fun getOtpCode(): Int? {
@@ -97,4 +103,7 @@ class OtpVerifActivity : AppCompatActivity() {
         const val EXTRA_EMAIL = "extra_email"
     }
 
+    private fun Boolean.showLoading() {
+        binding.progressBar.visibility = if (this) View.VISIBLE else View.GONE
+    }
 }

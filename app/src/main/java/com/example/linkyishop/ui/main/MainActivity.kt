@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // Set Toolbar sebagai ActionBar
-//        setSupportActionBar(binding.toolbar)
 
         val navView: BottomNavigationView = binding.navView
 

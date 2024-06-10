@@ -10,10 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.linkyishop.R
 import com.example.linkyishop.data.retrofit.response.DataItem
+import com.example.linkyishop.data.retrofit.response.LinksItem
+import com.example.linkyishop.data.retrofit.response.Products
 import com.example.linkyishop.databinding.ProductsCardBinding
 import com.example.linkyishop.ui.detailProduct.DetailProductActivity
+import com.google.gson.Gson
 
-class ProductsAdapter(private val context: Context) : ListAdapter<DataItem, ProductsAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class ProductsAdapter(private val context: Context, private val products: Products) : ListAdapter<DataItem, ProductsAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItem>() {
@@ -32,33 +35,33 @@ class ProductsAdapter(private val context: Context) : ListAdapter<DataItem, Prod
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val user = getItem(position)
-        holder.bind(user)
+        val product = products.data?.get(position)
+        if (product != null) {
+            holder.bind(product, products.links)
+        }
     }
-
+    override fun getItemCount(): Int {
+        return products.data?.size ?: 0
+    }
     inner class MyViewHolder(private val binding: ProductsCardBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(products: DataItem) {
-            binding.nameTextView.text = products.title
-            binding.descTextView.text = products.price.toString()
+        fun bind(product: DataItem, links: List<LinksItem?>?) {
+            binding.nameTextView.text = product.title
+            binding.descTextView.text = product.price.toString()
             Glide.with(context)
-                .load(products.thumbnail)
+                .load(product.thumbnail)
                 .placeholder(R.drawable.linkyi_logo)
                 .into(binding.profileImageView)
 
             binding.root.setOnClickListener {
                 val intent = Intent(context, DetailProductActivity::class.java).apply {
-                    putExtra("PRODUCT_IMAGE", products.thumbnail)
-                    putExtra("PRODUCT_NAME", products.title)
-                    putExtra("PRODUCT_PRICE", products.price)
+                    putExtra("PRODUCT_IMAGE", product.thumbnail)
+                    putExtra("PRODUCT_NAME", product.title)
+                    putExtra("PRODUCT_PRICE", product.price)
+                    // Serialize the links list to a JSON string
+                    putExtra("PRODUCT_LINKS", Gson().toJson(links))
                 }
                 context.startActivity(intent)
             }
-
-//            binding.cardView.setOnClickListener{
-//                val intent = Intent(context, UserDetailActivity::class.java)
-//                intent.putExtra(UserDetailActivity.EXTRA_USER, user)
-//                context.startActivity(intent)
-//            }
         }
     }
 }

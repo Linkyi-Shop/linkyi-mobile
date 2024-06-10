@@ -2,6 +2,7 @@ package com.example.linkyishop.ui.newPassword
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -41,6 +42,7 @@ class NewPasswordActivity : AppCompatActivity() {
 
             if (isValidInput(password, confirmPassword, otp)) {
                 viewModel.changePassword(password, confirmPassword, otp)
+                true.showLoading()
             } else {
                 Toast.makeText(this, "Input tidak valid", Toast.LENGTH_SHORT).show()
             }
@@ -60,12 +62,14 @@ class NewPasswordActivity : AppCompatActivity() {
         return newPassword.isNotEmpty() && confirmPassword.isNotEmpty() && newPassword == confirmPassword && otp > 0
     }
 
-
-
     private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish() // Optional: Sebaiknya selesaikan activity ini agar tidak bisa kembali ke halaman reset password
+    }
+
+    private fun Boolean.showLoading() {
+        binding.progressBar.visibility = if (this) View.VISIBLE else View.GONE
     }
 }
