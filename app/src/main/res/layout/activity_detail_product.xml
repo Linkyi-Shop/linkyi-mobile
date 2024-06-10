@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.detailProduct.DetailProductActivity"
-    android:background="@drawable/gradient_background">
+    android:background="#C5FFF8">
 
     <Button
         android:id="@+id/delete_product_button"
@@ -15,21 +15,24 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="72dp"
         android:text="Hapus"
+        android:backgroundTint="@color/blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Switch
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:text="@string/aktivasi"
+        android:textColor="@color/black"
         android:id="@+id/feature_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/product_image"
-        android:layout_width="300dp"
+        android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
@@ -91,9 +94,37 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
         android:text="Hapus"
+        android:backgroundTint="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/product_link"
         app:layout_constraintTop_toBottomOf="@id/product_price" />
+
+    <TextView
+        android:id="@+id/product_link2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/textview_border"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/delete_link_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/product_link"
+        tools:text="Grab Food" />
+
+    <Button
+        android:id="@+id/delete_link_button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="@color/blue"
+        android:text="Hapus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/product_link"
+        app:layout_constraintTop_toBottomOf="@id/product_link" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,7 @@ package com.example.linkyishop.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -14,7 +14,7 @@ import com.example.linkyishop.R
 import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.databinding.ActivityLoginBinding
 import com.example.linkyishop.ui.lupaPassword.LupaPasswordActivity
-import com.example.linkyishop.ui.welcome.WelcomeActivity
+import com.example.linkyishop.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -35,6 +35,10 @@ class LoginActivity : AppCompatActivity() {
             navigateToForgotPassword()
         }
 
+        binding.signUpTextView.setOnClickListener {
+            navigateToRegister()
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -44,11 +48,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupLogin() {
         binding.loginButton.setOnClickListener {
-            val email = binding.emailditText.text.toString().trim()
+            val email = binding.emaileditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString().trim()
 
             if (validateInput(email, password)) {
                 viewModel.login(email, password)
+                true.showLoading()
             }
         }
 
@@ -60,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validateInput(email: String, password: String): Boolean {
         if (email.isEmpty() || password.isEmpty()) {
-            showError("Email and password are required")
+            "Email and password are required".showError()
             return false
         }
         return true
@@ -78,8 +83,16 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun showError(message: String?) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    private fun navigateToRegister() {
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
     }
 
+    private fun String?.showError() {
+        Toast.makeText(this@LoginActivity, this, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun Boolean.showLoading() {
+        binding.progressBar.visibility = if (this) View.VISIBLE else View.GONE
+    }
 }

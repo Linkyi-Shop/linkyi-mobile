@@ -2,13 +2,13 @@ package com.example.linkyishop.ui.lupaPassword
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.Observer
 import com.example.linkyishop.R
 import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.databinding.ActivityLupaPasswordBinding
@@ -39,26 +39,27 @@ class LupaPasswordActivity : AppCompatActivity() {
         }
 
         binding.btnKirim.setOnClickListener {
-            val email = binding.emailEditText.text.toString().trim()
+            val email = binding.emaileditText.text.toString().trim()
 
             if (isValidEmail(email)) {
                 viewModel.lupaPassword(email)
+                true.showLoading()
             } else {
                 Toast.makeText(this, "Email tidak valid", Toast.LENGTH_SHORT).show()
             }
         }
 
-        viewModel.lupaPasswordResult.observe(this, Observer { result ->
+        viewModel.lupaPasswordResult.observe(this) { result ->
             when (result) {
                 is LupaPasswordViewModel.LupaPasswordResult.Success -> {
                     navigateToNewPassword()
                 }
+
                 is LupaPasswordViewModel.LupaPasswordResult.Error -> {
                     Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
                 }
             }
-        })
-
+        }
     }
 
     private fun isValidEmail(email: String): Boolean {
@@ -73,5 +74,9 @@ class LupaPasswordActivity : AppCompatActivity() {
     private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun Boolean.showLoading() {
+        binding.progressBar.visibility = if (this) View.VISIBLE else View.GONE
     }
 }

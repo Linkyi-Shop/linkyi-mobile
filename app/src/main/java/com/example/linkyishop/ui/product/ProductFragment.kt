@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.data.retrofit.response.DataItem
+import com.example.linkyishop.data.retrofit.response.Products
 import com.example.linkyishop.databinding.FragmentProductBinding
 import com.example.linkyishop.ui.otp.OtpViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -49,8 +50,8 @@ class ProductFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getProducts()
-            viewModel.listProduct.observe(viewLifecycleOwner) { productsList ->
-                setUsersData(productsList)
+            viewModel.listProduct.observe(viewLifecycleOwner) { products ->
+                setUsersData(products)
             }
         }
 
@@ -58,26 +59,14 @@ class ProductFragment : Fragment() {
             navigateToAddProduct()
         }
 
-//        viewModel.isLoading.observe(viewLifecycleOwner) {
-//            showLoading(it)
-//        }
-//        viewModel.message.observe(viewLifecycleOwner) {
-//            it.getContentIfNotHandled()?.let { snackBarText ->
-//                Snackbar.make(
-//                    view,
-//                    snackBarText,
-//                    Snackbar.LENGTH_SHORT
-//                ).show()
-//            }
-//        }
     }
 
-    private fun setUsersData(usersList: List<DataItem?>?) {
-        val adapter = ProductsAdapter(requireContext())
+    private fun setUsersData(products: Products) {
+        val adapter = ProductsAdapter(requireContext(), products)
         binding.rvProducts.layoutManager = GridLayoutManager(requireContext(), 2)
-        adapter.submitList(usersList)
         binding.rvProducts.adapter = adapter
     }
+
 
     private fun navigateToAddProduct() {
         val intent = Intent(requireContext(), AddProductActivity::class.java)
