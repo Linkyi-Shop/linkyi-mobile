@@ -92,12 +92,12 @@ data class Data(
 @Parcelize
 data class LinksItem(
 
-	@field:SerializedName("active")
-	val active: Boolean? = null,
+	@field:SerializedName("link")
+	val link: String? = null,
 
-	@field:SerializedName("label")
-	val label: String? = null,
+	@field:SerializedName("id")
+	val id: String? = null,
 
-	@field:SerializedName("url")
-	val url: String? = null
+	@field:SerializedName("type")
+	val type: String? = null
 ) : Parcelable
