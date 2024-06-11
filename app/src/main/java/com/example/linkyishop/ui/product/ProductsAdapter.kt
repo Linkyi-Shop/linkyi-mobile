@@ -57,7 +57,6 @@ class ProductsAdapter(private val context: Context, private val products: Produc
                     putExtra("PRODUCT_IMAGE", product.thumbnail)
                     putExtra("PRODUCT_NAME", product.title)
                     putExtra("PRODUCT_PRICE", product.price)
-                    // Serialize the links list to a JSON string
                     putExtra("PRODUCT_LINKS", Gson().toJson(links))
                 }
                 context.startActivity(intent)

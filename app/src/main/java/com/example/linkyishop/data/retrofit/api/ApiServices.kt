@@ -1,6 +1,7 @@
 package com.example.linkyishop.data.retrofit.api
 
 import com.example.linkyishop.data.retrofit.response.AddProductResponse
+import com.example.linkyishop.data.retrofit.response.DetailProductResponse
 import com.example.linkyishop.data.retrofit.response.LoginResponse
 import com.example.linkyishop.data.retrofit.response.LupaPasswordResponse
 import com.example.linkyishop.data.retrofit.response.NewPassword2Response
@@ -19,6 +20,7 @@ import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Path
 
 interface ApiServices {
     @FormUrlEncoded
@@ -79,4 +81,9 @@ interface ApiServices {
         @Part("is_active") isActive: RequestBody,
         @Part links: List<MultipartBody.Part>
     ): Response<AddProductResponse>
+
+    @GET("dashboard/products/{id}")
+    suspend fun getProductDetail(
+        @Path("id") productId: String
+    ): DetailProductResponse
 }

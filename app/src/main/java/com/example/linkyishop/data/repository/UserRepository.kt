@@ -3,7 +3,7 @@ package com.example.linkyishop.data.repository
 import com.example.linkyishop.data.preferences.UserModel
 import com.example.linkyishop.data.preferences.UserPreference
 import com.example.linkyishop.data.retrofit.api.ApiServices
-import com.example.linkyishop.data.retrofit.response.LoginResponse
+import com.example.linkyishop.data.retrofit.response.DetailProductResponse
 import com.example.linkyishop.data.retrofit.response.LupaPasswordResponse
 import com.example.linkyishop.data.retrofit.response.NewPassword2Response
 import com.example.linkyishop.data.retrofit.response.OTPResponse
@@ -19,6 +19,10 @@ class UserRepository private constructor(private val pref: UserPreference, priva
 
     suspend fun register(name: String, email: String, password: String) : RegisterResponse {
         return apiServices.register(name, email, password)
+    }
+
+    suspend fun getProductDetail(productId: String): DetailProductResponse {
+        return apiServices.getProductDetail(productId)
     }
 
 //    suspend fun login(email: String, password: String) : LoginResponse {
