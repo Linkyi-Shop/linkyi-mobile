@@ -1,27 +1,35 @@
 package com.example.linkyishop.ui.detailProduct
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.ContextThemeWrapper
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.marginBottom
 import com.bumptech.glide.Glide
 import com.example.linkyishop.R
 import com.example.linkyishop.data.ViewModelFactory
-import com.example.linkyishop.data.retrofit.response.LinksItem
+import com.example.linkyishop.data.retrofit.response.LinksItemDetail
 import com.example.linkyishop.databinding.ActivityDetailProductBinding
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.example.linkyishop.ui.main.MainActivity
+import com.google.android.material.button.MaterialButton
 
 class DetailProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailProductBinding
     private val viewModel by viewModels<DetailProductViewModel> {
         ViewModelFactory.getInstance(this)
     }
+    private var productId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,36 +43,121 @@ class DetailProductActivity : AppCompatActivity() {
             insets
         }
 
-        val productImage = intent.getStringExtra("PRODUCT_IMAGE")
-        val productName = intent.getStringExtra("PRODUCT_NAME")
-        val productPrice = intent.getStringExtra("PRODUCT_PRICE")
-        val productLinksJson = intent.getStringExtra("PRODUCT_LINKS")
+        productId = intent.getStringExtra("PRODUCT_ID")
 
-        val productLinks: List<LinksItem>? = Gson().fromJson(productLinksJson, object : TypeToken<List<LinksItem>>() {}.type)
+        viewModel.fetchProductDetail(productId!!)
+        viewModel.productDetail.observe(this) {
+            Glide.with(this)
+                .load(it.data?.thumbnail)
+                .into(binding.productImage)
+            binding.productName.text = it.data?.title
+            binding.productPrice.text = it.data?.price
+            it.data?.links.let {
+                addLinkTextViews(it)
+            }
 
-        Glide.with(this)
-            .load(productImage)
-            .into(binding.productImage)
-        binding.productName.text = productName
-        binding.productPrice.text = productPrice
+            if (it.data?.isActive == true) {
+                binding.featureSwitch.isChecked = true
+            }
+        }
 
-        // Tambahkan TextView untuk setiap jenis tautan
-        productLinks?.let {
-            addLinkTextViews(it)
+        with(binding){
+            deleteProductButton.setOnClickListener {
+                viewModel.deleteProduct(productId!!)
+                viewModel.deleteResponse.observe(this@DetailProductActivity) {
+                    if (it.success == true) {
+                        val intent = Intent(this@DetailProductActivity, MainActivity::class.java)
+                        Toast.makeText(this@DetailProductActivity, it.message, Toast.LENGTH_SHORT).show()
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this@DetailProductActivity, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            featureSwitch.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    // Aktivasi produk
+                }else{
+                    // Non-aktif produk
+                    Toast.makeText(this@DetailProductActivity, "Produk non-Aktif", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            btnAddLink.setOnClickListener{
+                viewModel.addLink(productId!!, edAddLink.text.toString())
+                viewModel.deleteResponse.observe(this@DetailProductActivity) {
+                    if (it.success == true) {
+                        Toast.makeText(this@DetailProductActivity, it.message, Toast.LENGTH_SHORT).show()
+                        finish()
+                        startActivity(getIntent())
+                    } else {
+                        Toast.makeText(this@DetailProductActivity, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
     }
 
-    private fun addLinkTextViews(links: List<LinksItem>) {
+
+    private fun addLinkTextViews(links: List<LinksItemDetail?>?) {
         val linksContainer = findViewById<LinearLayout>(R.id.links_container)
-        links.forEach { link ->
-            val textView = TextView(this).apply {
-                text = link.type
-                textSize = 16f
-                setPadding(8, 8, 8, 8)
-                setTextColor(ContextCompat.getColor(context, android.R.color.black))
-                setBackgroundResource(R.drawable.textview_border)
+        if (links != null) {
+            links.forEach { link ->
+                val horizontalLayout = LinearLayout(this).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    layoutParams = ViewGroup.MarginLayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        setMargins(0, 0, 0, 16)
+                    }
+                }
+
+                val textView = TextView(this).apply {
+                    text = link?.type
+                    textSize = 16f
+                    setPadding(8, 8, 8, 8)
+                    setBackgroundResource(R.drawable.textview_border)
+                    layoutParams = LinearLayout.LayoutParams(
+                        0,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        1f
+                    )
+                    setOnClickListener {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link?.link))
+                        startActivity(intent)
+                    }
+                }
+
+                val button = MaterialButton(this, null, R.attr.myAttr).apply {
+                    text = "Hapus"
+                    layoutParams = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                    setTextColor(getColor(R.color.md_theme_error))
+                    setOnClickListener {
+                        viewModel.deleteLink(productId!!, link?.id!!)
+                        viewModel.deleteResponse.observe(this@DetailProductActivity) {
+                            if (it.success == true) {
+                                Toast.makeText(this@DetailProductActivity, it.message, Toast.LENGTH_SHORT).show()
+                                finish()
+                                startActivity(getIntent())
+                            } else {
+                                Toast.makeText(this@DetailProductActivity, it.message, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+
+                // Add TextView and Button to the horizontal LinearLayout
+                horizontalLayout.addView(textView)
+                horizontalLayout.addView(button)
+
+                // Add the horizontal LinearLayout to the linksContainer
+                linksContainer.addView(horizontalLayout)
             }
-            linksContainer.addView(textView)
         }
     }
 }

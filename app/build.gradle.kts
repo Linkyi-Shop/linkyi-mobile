@@ -17,7 +17,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String","BASE_URL","\"http://linkyi.shop:8021/api/\"")
+        buildConfigField("String","BASE_URL","\"http://34.172.132.181:8021/api/\"")
     }
 
     buildTypes {
