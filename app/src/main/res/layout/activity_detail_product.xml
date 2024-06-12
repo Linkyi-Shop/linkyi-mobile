@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.detailProduct.DetailProductActivity"
-    android:background="#C5FFF8">
+    tools:context=".ui.detailProduct.DetailProductActivity">
 
     <Button
         android:id="@+id/delete_product_button"
@@ -15,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="72dp"
         android:text="Hapus"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="@color/md_theme_error"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +25,6 @@
         android:layout_marginTop="72dp"
         android:layout_marginEnd="8dp"
         android:text="@string/aktivasi"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
