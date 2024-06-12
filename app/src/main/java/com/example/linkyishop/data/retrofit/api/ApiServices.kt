@@ -82,7 +82,7 @@ interface ApiServices {
         @Part file: MultipartBody.Part,
         @Part("is_active") isActive: RequestBody,
         @Part links: List<MultipartBody.Part>
-    ): Response<AddProductResponse>
+    ): Response<DeleteProductResponse>
 
     @GET("dashboard/products/{id}")
     suspend fun getProductDetail(
