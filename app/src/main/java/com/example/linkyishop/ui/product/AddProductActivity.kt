@@ -25,6 +25,7 @@ import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.data.preferences.UserPreference
 import com.example.linkyishop.data.preferences.dataStore
 import com.example.linkyishop.databinding.ActivityAddProductBinding
+import com.example.linkyishop.ui.main.MainActivity
 import com.nex3z.flowlayout.FlowLayout
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -192,11 +193,18 @@ class AddProductActivity : AppCompatActivity() {
             // Melakukan pengiriman data ke ViewModel untuk proses tambah produk
             lifecycleScope.launch {
                 viewModel.addProduct(title, price, category, multipartBody, isActive, linksArray)
-                val intent = Intent(this@AddProductActivity, ProductFragment::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                viewModel.addProductResult.observe(this@AddProductActivity){
+                    if (it.success == true){
+                        val intent = Intent(this@AddProductActivity, MainActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        }
+                        startActivity(intent)
+                        it.message?.showToast()
+                        finish()
+                    }else{
+                        it.message?.showToast()
+                    }
                 }
-                startActivity(intent)
-                finish()
             }
         }
     }

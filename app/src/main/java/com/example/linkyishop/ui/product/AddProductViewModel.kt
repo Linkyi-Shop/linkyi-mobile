@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.linkyishop.data.repository.UserRepository
 import com.example.linkyishop.data.retrofit.api.ApiConfig
 import com.example.linkyishop.data.retrofit.response.AddProductResponse
+import com.example.linkyishop.data.retrofit.response.DeleteProductResponse
 import com.example.linkyishop.data.retrofit.response.ProductsResponse
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -16,8 +17,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 class AddProductViewModel(private val repository: UserRepository) : ViewModel() {
-    private val _addProductResult = MutableLiveData<Result<AddProductResponse>>()
-    val addProductResult: LiveData<Result<AddProductResponse>> = _addProductResult
+    private val _addProductResult = MutableLiveData<DeleteProductResponse>()
+    val addProductResult: LiveData<DeleteProductResponse> = _addProductResult
 
     suspend fun addProduct(
         title: String,
@@ -41,14 +42,13 @@ class AddProductViewModel(private val repository: UserRepository) : ViewModel() 
                 "Bearer $token", titlePart, pricePart, categoryPart, thumbnail, isActivePart, linksParts
             )
             if (response.isSuccessful) {
-                _addProductResult.postValue(Result.success(response.body()!!))
+                _addProductResult.postValue(response.body())
                 Log.e("AddProduct", "Success: ${response.body()}")
             } else {
-                _addProductResult.postValue(Result.failure(Exception(response.message())))
+                _addProductResult.postValue(response.body())
                 Log.e("AddProduct", "Error: ${response.message()}")
             }
         } catch (e: Exception) {
-            _addProductResult.postValue(Result.failure(e))
             Log.e("AddProduct", "Exception: ${e.message.toString()}")
         }
     }
