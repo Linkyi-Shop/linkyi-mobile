@@ -1,6 +1,7 @@
 package com.example.linkyishop.data.retrofit.api
 
 import com.example.linkyishop.data.retrofit.response.AddProductResponse
+import com.example.linkyishop.data.retrofit.response.DeleteProductResponse
 import com.example.linkyishop.data.retrofit.response.DetailProductResponse
 import com.example.linkyishop.data.retrofit.response.LoginResponse
 import com.example.linkyishop.data.retrofit.response.LupaPasswordResponse
@@ -13,6 +14,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -84,6 +86,28 @@ interface ApiServices {
 
     @GET("dashboard/products/{id}")
     suspend fun getProductDetail(
+        @Header("Authorization") token: String,
         @Path("id") productId: String
     ): DetailProductResponse
+
+    @DELETE("dashboard/products/delete/{id}")
+    suspend fun deleteProduct(
+        @Header("Authorization") token: String,
+        @Path("id") productId: String
+    ): DeleteProductResponse
+
+    @FormUrlEncoded
+    @POST("dashboard/products/{id}/link/create")
+    suspend fun addProductLink(
+        @Header("Authorization") token: String,
+        @Path("id") productId: String,
+        @Field("link") link: String
+    ): DeleteProductResponse
+
+    @DELETE("dashboard/products/{id}/link/delete/{link}")
+    suspend fun deleteLinkProduct(
+        @Header("Authorization") token: String,
+        @Path("id") productId: String,
+        @Path("link") linkId: String
+    ): DeleteProductResponse
 }

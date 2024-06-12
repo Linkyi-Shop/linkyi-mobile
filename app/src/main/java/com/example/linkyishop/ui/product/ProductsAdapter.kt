@@ -54,10 +54,7 @@ class ProductsAdapter(private val context: Context, private val products: Produc
 
             binding.root.setOnClickListener {
                 val intent = Intent(context, DetailProductActivity::class.java).apply {
-                    putExtra("PRODUCT_IMAGE", product.thumbnail)
-                    putExtra("PRODUCT_NAME", product.title)
-                    putExtra("PRODUCT_PRICE", product.price)
-                    putExtra("PRODUCT_LINKS", Gson().toJson(links))
+                    putExtra("PRODUCT_ID", product.id)
                 }
                 context.startActivity(intent)
             }
