@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.login.LoginActivity"
-    android:background="#C5FFF8">
+    android:background="@color/md_theme_tertiaryContainer"
+    tools:context=".ui.login.LoginActivity">
 
     <ImageView
         android:id="@+id/logoImageView"
@@ -29,7 +29,6 @@
         android:layout_marginTop="88dp"
         android:layout_marginEnd="32dp"
         android:text="@string/title_login_page"
-        android:textColor="@color/black"
         android:textSize="38sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +44,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:text="@string/subjudul2"
-        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title2TextView"
         tools:alpha="100" />
@@ -69,7 +67,7 @@
             android:gravity="start|center_vertical"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            tools:ignore="SpeakableTextPresentCheck"/>
+            tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -80,8 +78,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        app:hintEnabled="true"
         app:endIconMode="password_toggle"
+        app:hintEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/emailEditTextLayout">
@@ -90,9 +88,9 @@
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
             android:hint="Password"
             android:inputType="textPassword"
-            android:gravity="start|center_vertical"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,14 +98,14 @@
         android:id="@+id/forgotPasswordTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         android:text="@string/forgot_password"
-        android:textColor="@color/blueDark"
+        android:textColor="@color/md_theme_primary"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/passwordEditTextLayout"
-        app:layout_constraintBottom_toTopOf="@+id/loginButton"
         tools:alpha="100" />
 
     <Button
@@ -117,7 +115,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="32dp"
-        android:backgroundTint="@color/blue"
         android:text="@string/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +139,6 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="32dp"
         android:drawableLeft="@drawable/ic_baseline_google_24"
-        android:backgroundTint="@color/blue"
         android:drawablePadding="8dp"
         android:paddingStart="32dp"
         android:paddingEnd="16dp"
@@ -156,13 +152,10 @@
         android:id="@+id/dontHaveAccountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
         android:layout_marginTop="32dp"
         android:text="@string/dont_have_account"
-        android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@id/signUpTextView"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@id/loginGoogleButton"
         tools:ignore="MissingConstraints" />
 
@@ -170,12 +163,11 @@
         android:id="@+id/signUpTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-100dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:text="@string/sign_up_text"
-        android:textColor="@color/blueDark"
+        android:textColor="@color/md_theme_primary"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/dontHaveAccountTextView"
         app:layout_constraintTop_toBottomOf="@id/loginGoogleButton"
         tools:ignore="MissingConstraints" />
@@ -190,5 +182,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="230dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

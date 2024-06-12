@@ -22,16 +22,11 @@ class LinkyiFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
+        val linkyiViewModel =
             ViewModelProvider(this).get(LinkyiViewModel::class.java)
 
         _binding = FragmentLinkyiBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textLinkyi
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
         return root
     }
 

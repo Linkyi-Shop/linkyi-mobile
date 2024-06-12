@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.otp.OtpVerifActivity"
-    android:background="#C5FFF8">
+    android:background="@color/md_theme_tertiaryContainer">
 
     <ImageView
         android:id="@+id/logoImageView"
@@ -109,7 +109,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/verifikasi"
-        android:backgroundTint="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llOtp" />
@@ -120,7 +119,6 @@
         android:layout_height="wrap_content"
         android:text="@string/resend_otp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/blue"
         app:layout_constraintTop_toBottomOf="@+id/btnVerify"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
