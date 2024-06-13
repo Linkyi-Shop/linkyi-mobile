@@ -1,6 +1,8 @@
 package com.example.linkyishop.data.retrofit.api
 
 import com.example.linkyishop.data.retrofit.response.AddProductResponse
+import com.example.linkyishop.data.retrofit.response.AktivasiTokoResponse
+import com.example.linkyishop.data.retrofit.response.CekUsernameResponse
 import com.example.linkyishop.data.retrofit.response.DeleteProductResponse
 import com.example.linkyishop.data.retrofit.response.DetailProductResponse
 import com.example.linkyishop.data.retrofit.response.LoginResponse
@@ -42,10 +44,10 @@ interface ApiServices {
 
     @FormUrlEncoded
     @POST("auth/otp-confirmation")
-    suspend fun OTP(
+    fun OTP(
         @Field("code") code: Int,
         @Field("email") email: String?
-    ): OTPResponse
+    ): Call<OTPResponse>
 
     @FormUrlEncoded
     @POST("auth/otp-confirmation-resend")
@@ -110,4 +112,20 @@ interface ApiServices {
         @Path("id") productId: String,
         @Path("link") linkId: String
     ): DeleteProductResponse
+
+    @FormUrlEncoded
+    @POST("profile/check-username")
+    suspend fun checkUsername(
+        @Header("Authorization") token: String,
+        @Field("username") username: String
+    ): CekUsernameResponse
+    @Multipart
+    @POST("profile/store-activation")
+    suspend fun activateStore(
+        @Header("Authorization") token: String,
+        @Part("name") name: RequestBody,
+        @Part("username") username: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part logo: MultipartBody.Part
+    ): AktivasiTokoResponse
 }

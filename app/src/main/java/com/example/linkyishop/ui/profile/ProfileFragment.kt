@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.databinding.FragmentProfileBinding
+import com.example.linkyishop.ui.aktivasiToko.AktivasiTokoActivity
 import com.example.linkyishop.ui.login.LoginViewModel
 import com.example.linkyishop.ui.product.ProductViewModel
 import com.example.linkyishop.ui.welcome.WelcomeActivity
@@ -45,6 +46,11 @@ class ProfileFragment : Fragment() {
         binding.buttonLogout.setOnClickListener {
             viewModel.deleteUserToken()
             startActivity(Intent(activity, WelcomeActivity::class.java))
+            activity?.finish()
+        }
+
+        binding.buttonActivated.setOnClickListener {
+            startActivity(Intent(activity, AktivasiTokoActivity::class.java))
             activity?.finish()
         }
         return root

@@ -8,6 +8,8 @@ import android.os.Environment
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import com.example.linkyishop.BuildConfig
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -63,4 +65,12 @@ fun uriToFile(imageUri: Uri, context: Context): File {
 fun createCustomTempFile(context: Context): File {
     val filesDir = context.externalCacheDir
     return File.createTempFile(timeStamp, ".jpg", filesDir)
+}
+
+fun String.toRequestBody(mediaType: MediaType?): RequestBody {
+    return RequestBody.create(mediaType, this)
+}
+
+fun File.asRequestBody(mediaType: MediaType?): RequestBody {
+    return RequestBody.create(mediaType, this)
 }
