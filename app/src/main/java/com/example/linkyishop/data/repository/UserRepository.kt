@@ -3,14 +3,17 @@ package com.example.linkyishop.data.repository
 import com.example.linkyishop.data.preferences.UserModel
 import com.example.linkyishop.data.preferences.UserPreference
 import com.example.linkyishop.data.retrofit.api.ApiServices
+import com.example.linkyishop.data.retrofit.response.AktivasiTokoResponse
+import com.example.linkyishop.data.retrofit.response.CekUsernameResponse
 import com.example.linkyishop.data.retrofit.response.DeleteProductResponse
 import com.example.linkyishop.data.retrofit.response.DetailProductResponse
 import com.example.linkyishop.data.retrofit.response.LupaPasswordResponse
 import com.example.linkyishop.data.retrofit.response.NewPassword2Response
-import com.example.linkyishop.data.retrofit.response.OTPResponse
 import com.example.linkyishop.data.retrofit.response.RegisterResponse
 import com.example.linkyishop.data.retrofit.response.ResendOtpResponse
 import kotlinx.coroutines.flow.Flow
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 
 class UserRepository private constructor(private val pref: UserPreference, private val apiServices: ApiServices) {
@@ -37,13 +40,25 @@ class UserRepository private constructor(private val pref: UserPreference, priva
         return apiServices.deleteLinkProduct("Bearer ${pref.getUserToken()}", productId, linkId)
     }
 
+    suspend fun checkUsername(username: String): CekUsernameResponse {
+        return apiServices.checkUsername("Bearer ${pref.getUserToken()}",username)
+    }
+    suspend fun activateStore(
+        name: RequestBody,
+        username: RequestBody,
+        description: RequestBody,
+        logo: MultipartBody.Part
+    ): AktivasiTokoResponse {
+        return apiServices.activateStore("Bearer ${pref.getUserToken()}",name, username, description, logo)
+    }
+
 //    suspend fun login(email: String, password: String) : LoginResponse {
 //        return apiServices.login(email, password)
 //    }
 
-    suspend fun otpVerification(code: Int, email: String?) : OTPResponse {
-        return apiServices.OTP(code, email)
-    }
+//    suspend fun otpVerification(code: Int, email: String?) : OTPResponse {
+//        return apiServices.OTP(code, email)
+//    }
 
     suspend fun resendOtp(email: String?): ResendOtpResponse {
         return apiServices.resendOTP(email)

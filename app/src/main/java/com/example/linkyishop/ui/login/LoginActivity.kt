@@ -35,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
             navigateToForgotPassword()
         }
 
+
         binding.signUpTextView.setOnClickListener {
             navigateToRegister()
         }

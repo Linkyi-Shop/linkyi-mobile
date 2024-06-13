@@ -13,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.linkyishop.R
 import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.databinding.ActivityOtpVerifBinding
+import com.example.linkyishop.ui.aktivasiToko.AktivasiTokoActivity
+import com.example.linkyishop.ui.login.LoginViewModel
 import com.example.linkyishop.ui.main.MainActivity
 
 class OtpVerifActivity : AppCompatActivity() {
@@ -22,6 +24,9 @@ class OtpVerifActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
 
+    private val loginViewModel by viewModels<LoginViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -40,7 +45,7 @@ class OtpVerifActivity : AppCompatActivity() {
         binding.btnVerify.setOnClickListener {
             val otpCode = getOtpCode()
             if (otpCode != null) {
-                viewModel.verifyOtp(otpCode, email)
+                viewModel.verifyOTP(otpCode, email)
             } else {
                 showError(getString(R.string.errorOTP))
             }
@@ -52,12 +57,14 @@ class OtpVerifActivity : AppCompatActivity() {
         }
 
         viewModel.otpResult.observe(this) { result ->
-            result.onSuccess {
+            if (result.success == true) {
                 // Navigasi ke halaman utama setelah berhasil verifikasi OTP
-                navigateToMainScreen()
-            }.onFailure {
+                Toast.makeText(this, result.data?.token.toString(), Toast.LENGTH_SHORT).show()
+                loginViewModel.saveUserToken(result.data?.token.toString())
+                navigateToAktivasiScreen()
+            } else {
                 // Tampilkan pesan error
-                showError(it.message)
+                showError(result.message)
             }
         }
 
@@ -88,8 +95,8 @@ class OtpVerifActivity : AppCompatActivity() {
         } else null
     }
 
-    private fun navigateToMainScreen() {
-        val intent = Intent(this, MainActivity::class.java)
+    private fun navigateToAktivasiScreen() {
+        val intent = Intent(this, AktivasiTokoActivity::class.java)
         startActivity(intent)
         finish()
     }
@@ -102,7 +109,6 @@ class OtpVerifActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_EMAIL = "extra_email"
     }
-
     private fun Boolean.showLoading() {
         binding.progressBar.visibility = if (this) View.VISIBLE else View.GONE
     }

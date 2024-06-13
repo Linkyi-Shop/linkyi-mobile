@@ -2,10 +2,10 @@ package com.example.linkyishop.data.retrofit.response
 
 import com.google.gson.annotations.SerializedName
 
-data class OTPResponse(
+data class CekUsernameResponse(
 
 	@field:SerializedName("data")
-	val data: OTPResult? = null,
+	val data: DataUsername? = null,
 
 	@field:SerializedName("success")
 	val success: Boolean? = null,
@@ -14,7 +14,11 @@ data class OTPResponse(
 	val message: String? = null
 )
 
-data class OTPResult(
-	@field:SerializedName("token")
-	val token: String? = null
+data class DataUsername(
+
+	@field:SerializedName("availability")
+	val availability: Boolean? = null,
+
+	@field:SerializedName("username")
+	val username: String? = null
 )

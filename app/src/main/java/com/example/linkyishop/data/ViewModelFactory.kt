@@ -1,6 +1,6 @@
 package com.example.linkyishop.data
 
-import android.app.Application
+import com.example.linkyishop.ui.aktivasiToko.AktivasiTokoViewModel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -46,6 +46,9 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(AddProductViewModel::class.java) -> {
                 AddProductViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(AktivasiTokoViewModel::class.java) -> {
+                AktivasiTokoViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
