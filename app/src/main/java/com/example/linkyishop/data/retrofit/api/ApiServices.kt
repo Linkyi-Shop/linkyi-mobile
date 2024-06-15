@@ -10,8 +10,11 @@ import com.example.linkyishop.data.retrofit.response.LupaPasswordResponse
 import com.example.linkyishop.data.retrofit.response.NewPassword2Response
 import com.example.linkyishop.data.retrofit.response.OTPResponse
 import com.example.linkyishop.data.retrofit.response.ProductsResponse
+import com.example.linkyishop.data.retrofit.response.ProfileResponse
 import com.example.linkyishop.data.retrofit.response.RegisterResponse
 import com.example.linkyishop.data.retrofit.response.ResendOtpResponse
+import com.example.linkyishop.data.retrofit.response.UpdatePasswordResponse
+import com.example.linkyishop.data.retrofit.response.UpdateProductResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -128,4 +131,26 @@ interface ApiServices {
         @Part("description") description: RequestBody,
         @Part logo: MultipartBody.Part
     ): AktivasiTokoResponse
+
+    @FormUrlEncoded
+    @POST("profile/update-password")
+    suspend fun updatePassword(
+        @Header("Authorization") token: String,
+        @Field("password") password: String,
+        @Field("confirm_password") confirmPassword: String,
+        @Field("current_password") currentPassword: String
+    ): UpdatePasswordResponse
+
+    @Multipart
+    @POST("dashboard/products/update/{id}")
+    suspend fun updateProduct(
+        @Header("Authorization") token: String,
+        @Path("id") productId: String,
+        @Part("title") title: RequestBody,
+        @Part("price") price: RequestBody,
+        @Part("category") category: RequestBody,
+        @Part thumbnail: MultipartBody.Part?
+    ): UpdateProductResponse
+    @GET("profile")
+    suspend fun getStoreProfile(): ProfileResponse
 }

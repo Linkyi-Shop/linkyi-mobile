@@ -46,7 +46,7 @@ class ProductsAdapter(private val context: Context, private val products: Produc
     inner class MyViewHolder(private val binding: ProductsCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(product: DataItem, links: List<LinksItem?>?) {
             binding.nameTextView.text = product.title
-            binding.descTextView.text = product.price.toString()
+            binding.descTextView.text = "Rp. ${product.price.toString()}"
             Glide.with(context)
                 .load(product.thumbnail)
                 .placeholder(R.drawable.linkyi_logo)

@@ -22,6 +22,7 @@ import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.data.retrofit.response.LinksItemDetail
 import com.example.linkyishop.databinding.ActivityDetailProductBinding
 import com.example.linkyishop.ui.main.MainActivity
+import com.example.linkyishop.ui.product.UpdateProductActivity
 import com.google.android.material.button.MaterialButton
 
 class DetailProductActivity : AppCompatActivity() {
@@ -45,13 +46,17 @@ class DetailProductActivity : AppCompatActivity() {
 
         productId = intent.getStringExtra("PRODUCT_ID")
 
+        binding.btnEditProduk.setOnClickListener {
+            navigateToUpdateProduct(productId.toString())
+        }
+
         viewModel.fetchProductDetail(productId!!)
         viewModel.productDetail.observe(this) {
             Glide.with(this)
                 .load(it.data?.thumbnail)
                 .into(binding.productImage)
             binding.productName.text = it.data?.title
-            binding.productPrice.text = it.data?.price
+            binding.productPrice.text = "Rp. ${it.data?.price}"
             it.data?.links.let {
                 addLinkTextViews(it)
             }
@@ -99,6 +104,11 @@ class DetailProductActivity : AppCompatActivity() {
         }
     }
 
+    private fun navigateToUpdateProduct(productId: String) {
+        val intent = Intent(this, UpdateProductActivity::class.java)
+        intent.putExtra("PRODUCT_ID", productId)
+        startActivity(intent)
+    }
 
     private fun addLinkTextViews(links: List<LinksItemDetail?>?) {
         val linksContainer = findViewById<LinearLayout>(R.id.links_container)

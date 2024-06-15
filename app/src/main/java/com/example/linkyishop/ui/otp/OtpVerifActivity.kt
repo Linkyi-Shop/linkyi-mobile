@@ -59,7 +59,6 @@ class OtpVerifActivity : AppCompatActivity() {
         viewModel.otpResult.observe(this) { result ->
             if (result.success == true) {
                 // Navigasi ke halaman utama setelah berhasil verifikasi OTP
-                Toast.makeText(this, result.data?.token.toString(), Toast.LENGTH_SHORT).show()
                 loginViewModel.saveUserToken(result.data?.token.toString())
                 navigateToAktivasiScreen()
             } else {
