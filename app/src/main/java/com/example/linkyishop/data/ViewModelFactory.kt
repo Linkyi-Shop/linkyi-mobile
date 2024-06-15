@@ -14,7 +14,9 @@ import com.example.linkyishop.ui.newPassword.NewPasswordViewModel
 import com.example.linkyishop.ui.otp.OtpViewModel
 import com.example.linkyishop.ui.product.AddProductViewModel
 import com.example.linkyishop.ui.product.ProductViewModel
+import com.example.linkyishop.ui.product.UpdateProductViewModel
 import com.example.linkyishop.ui.register.RegisterViewModel
+import com.example.linkyishop.ui.updatePassword.UpdatePasswordViewModel
 
 class ViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
@@ -49,6 +51,12 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(AktivasiTokoViewModel::class.java) -> {
                 AktivasiTokoViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(UpdatePasswordViewModel::class.java) -> {
+                UpdatePasswordViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(UpdateProductViewModel::class.java) -> {
+                UpdateProductViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

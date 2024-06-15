@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.linkyishop.data.preferences.UserModel
 import com.example.linkyishop.data.repository.UserRepository
 import com.example.linkyishop.data.retrofit.api.ApiConfig
 import com.example.linkyishop.data.retrofit.response.DataLogin
@@ -42,6 +44,11 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
     fun saveUserToken(token: String) {
         viewModelScope.launch {
             repository.saveUserToken(token)
+        }
+    }
+    fun getUserToken() {
+        viewModelScope.launch {
+            repository.getUserToken()
         }
     }
 

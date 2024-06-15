@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.linkyishop.data.repository.UserRepository
 import com.example.linkyishop.data.retrofit.response.AktivasiTokoResponse
 import com.example.linkyishop.data.retrofit.response.CekUsernameResponse
+import com.example.linkyishop.data.retrofit.response.ProfileResponse
 import com.example.linkyishop.ui.product.toRequestBody
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -21,6 +22,9 @@ class AktivasiTokoViewModel(private val repository: UserRepository) : ViewModel(
 
     private val _activateStoreResult = MutableLiveData<Result<AktivasiTokoResponse>>()
     val activateStoreResult: LiveData<Result<AktivasiTokoResponse>> = _activateStoreResult
+
+    private val _profileResult = MutableLiveData<ProfileResponse?>()
+    val profileResult: LiveData<ProfileResponse?> = _profileResult
 
     fun checkUsername(username: String, isCheck: Boolean = true) {
         viewModelScope.launch {
@@ -62,6 +66,19 @@ class AktivasiTokoViewModel(private val repository: UserRepository) : ViewModel(
                 _activateStoreResult.value = Result.failure(e)
             } catch (e: HttpException) {
                 _activateStoreResult.value = Result.failure(Exception(e.message()))
+            }
+        }
+    }
+
+    fun getProfile() {
+        viewModelScope.launch {
+            try {
+                val response = repository.getStoreProfile()
+                _profileResult.value = response
+            } catch (e: IOException) {
+                _profileResult.value = null
+            } catch (e: HttpException) {
+                _profileResult.value = null
             }
         }
     }
