@@ -27,6 +27,9 @@ class ProductViewModel(private val repository: UserRepository) : ViewModel() {
     private val _listProduct = MutableLiveData<Products>()
     val listProduct: LiveData<Products> get() = _listProduct
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
     suspend fun getProducts() {
         try {
             val token = repository.getUserToken()
@@ -44,6 +47,8 @@ class ProductViewModel(private val repository: UserRepository) : ViewModel() {
             }
         } catch (e: Exception) {
             Log.e("Products", "Exception: ${e.message.toString()}")
+        } finally {
+            _isLoading.value = false
         }
     }
 }

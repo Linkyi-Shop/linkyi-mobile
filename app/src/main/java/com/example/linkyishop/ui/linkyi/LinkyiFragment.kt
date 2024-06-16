@@ -4,14 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.linkyishop.R
+import com.example.linkyishop.data.ViewModelFactory
+import com.example.linkyishop.data.retrofit.response.Links
+import com.example.linkyishop.data.retrofit.response.Products
 import com.example.linkyishop.databinding.FragmentLinkyiBinding
+import com.example.linkyishop.databinding.FragmentProductBinding
+import com.example.linkyishop.ui.product.ProductsAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 
 class LinkyiFragment : Fragment() {
 
     private var _binding: FragmentLinkyiBinding? = null
+    private val viewModel by viewModels<LinkyiViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,12 +35,37 @@ class LinkyiFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val linkyiViewModel =
-            ViewModelProvider(this).get(LinkyiViewModel::class.java)
 
         _binding = FragmentLinkyiBinding.inflate(inflater, container, false)
         val root: View = binding.root
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentLinkyiBinding.bind(view)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getLinkyi()
+            viewModel.isLoading.observe(viewLifecycleOwner){
+                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+            }
+            viewModel.linkyi.observe(viewLifecycleOwner) { linkyi ->
+                if (linkyi != null) {
+                    setLinkyiData(linkyi)
+                }
+            }
+        }
+//        binding.floatingActionButton.setOnClickListener {
+//            navigateToAddProduct()
+//        }
+
+    }
+
+    private fun setLinkyiData(links: Links) {
+        val adapter = LinkyiAdapter(requireContext(), links)
+        binding.rvProducts.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvProducts.adapter = adapter
     }
 
     override fun onDestroyView() {

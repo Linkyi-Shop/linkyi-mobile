@@ -7,8 +7,12 @@ import com.example.linkyishop.data.retrofit.response.AktivasiTokoResponse
 import com.example.linkyishop.data.retrofit.response.CekUsernameResponse
 import com.example.linkyishop.data.retrofit.response.DeleteProductResponse
 import com.example.linkyishop.data.retrofit.response.DetailProductResponse
+import com.example.linkyishop.data.retrofit.response.Links
+import com.example.linkyishop.data.retrofit.response.LinkyiDetailResponse
+import com.example.linkyishop.data.retrofit.response.LinkyiResponse
 import com.example.linkyishop.data.retrofit.response.LupaPasswordResponse
 import com.example.linkyishop.data.retrofit.response.NewPassword2Response
+import com.example.linkyishop.data.retrofit.response.ProductStatusResponse
 import com.example.linkyishop.data.retrofit.response.ProductsResponse
 import com.example.linkyishop.data.retrofit.response.ProfileResponse
 import com.example.linkyishop.data.retrofit.response.RegisterResponse
@@ -32,10 +36,18 @@ class UserRepository private constructor(private val pref: UserPreference, priva
     suspend fun getProductDetail(productId: String): DetailProductResponse {
         return apiServices.getProductDetail("Bearer ${pref.getUserToken()}", productId)
     }
+    suspend fun getLinkyi(): LinkyiResponse {
+        return apiServices.getLinkyi("Bearer ${pref.getUserToken()}")
+    }
+
+    suspend fun getLinkyi(id: String): LinkyiDetailResponse {
+        return apiServices.getLinkyi("Bearer ${pref.getUserToken()}", id)
+    }
 
     suspend fun deleteProduct(productId: String): DeleteProductResponse {
         return apiServices.deleteProduct("Bearer ${pref.getUserToken()}", productId)
     }
+
     suspend fun addLinkProduct(productId: String, link: String): DeleteProductResponse {
         return apiServices.addProductLink("Bearer ${pref.getUserToken()}", productId, link)
     }
@@ -64,6 +76,23 @@ class UserRepository private constructor(private val pref: UserPreference, priva
         thumbnail: MultipartBody.Part?
     ): UpdateProductResponse {
         return apiServices.updateProduct("Bearer ${getUserToken()}", productId, title, price, category, thumbnail)
+    }
+
+    suspend fun addProduct(
+        title: RequestBody,
+        price: RequestBody,
+        category: RequestBody,
+        thumbnail: MultipartBody.Part,
+        isActive: RequestBody,
+        links: List<MultipartBody.Part>
+    ): DeleteProductResponse {
+        return apiServices.addProduct("Bearer ${getUserToken()}", title, price, category, thumbnail, isActive, links)
+    }
+    suspend fun productStatus(
+        productId: String,
+        isActive: String,
+    ): ProductStatusResponse {
+        return apiServices.productStatus("Bearer ${getUserToken()}", productId, isActive)
     }
     suspend fun getStoreProfile(): ProfileResponse {
         return apiServices.getStoreProfile()

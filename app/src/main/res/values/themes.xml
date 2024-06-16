@@ -53,4 +53,10 @@
         <!-- Customize your theme here. -->
         <item name="myAttr">@style/Widget.MaterialComponents.Button.TextButton</item>
     </style>
+    <style name="Theme.LinkyiShop.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.LinkyiShop.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.LinkyiShop.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

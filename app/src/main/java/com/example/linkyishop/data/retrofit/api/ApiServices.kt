@@ -5,10 +5,13 @@ import com.example.linkyishop.data.retrofit.response.AktivasiTokoResponse
 import com.example.linkyishop.data.retrofit.response.CekUsernameResponse
 import com.example.linkyishop.data.retrofit.response.DeleteProductResponse
 import com.example.linkyishop.data.retrofit.response.DetailProductResponse
+import com.example.linkyishop.data.retrofit.response.LinkyiDetailResponse
+import com.example.linkyishop.data.retrofit.response.LinkyiResponse
 import com.example.linkyishop.data.retrofit.response.LoginResponse
 import com.example.linkyishop.data.retrofit.response.LupaPasswordResponse
 import com.example.linkyishop.data.retrofit.response.NewPassword2Response
 import com.example.linkyishop.data.retrofit.response.OTPResponse
+import com.example.linkyishop.data.retrofit.response.ProductStatusResponse
 import com.example.linkyishop.data.retrofit.response.ProductsResponse
 import com.example.linkyishop.data.retrofit.response.ProfileResponse
 import com.example.linkyishop.data.retrofit.response.RegisterResponse
@@ -77,6 +80,17 @@ interface ApiServices {
         @Header("Authorization") token: String
     ): Response<ProductsResponse>
 
+    @GET("dashboard/bio-links")
+    suspend fun getLinkyi(
+        @Header("Authorization") token: String
+    ): LinkyiResponse
+
+    @GET("dashboard/bio-links/{id}")
+    suspend fun getLinkyi(
+        @Header("Authorization") token: String,
+        @Path("id") productId: String
+    ): LinkyiDetailResponse
+
     @Multipart
     @POST("dashboard/products/create")
     suspend fun addProduct(
@@ -87,7 +101,7 @@ interface ApiServices {
         @Part file: MultipartBody.Part,
         @Part("is_active") isActive: RequestBody,
         @Part links: List<MultipartBody.Part>
-    ): Response<DeleteProductResponse>
+    ): DeleteProductResponse
 
     @GET("dashboard/products/{id}")
     suspend fun getProductDetail(
@@ -140,6 +154,14 @@ interface ApiServices {
         @Field("confirm_password") confirmPassword: String,
         @Field("current_password") currentPassword: String
     ): UpdatePasswordResponse
+
+    @FormUrlEncoded
+    @POST("dashboard/products/update-status/{id}")
+    suspend fun productStatus(
+        @Header("Authorization") token: String,
+        @Path("id") productId: String,
+        @Field("is_active") isActive: String
+    ): ProductStatusResponse
 
     @Multipart
     @POST("dashboard/products/update/{id}")

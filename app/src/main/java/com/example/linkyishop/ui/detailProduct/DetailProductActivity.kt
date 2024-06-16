@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.ContextThemeWrapper
+import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -23,11 +24,15 @@ import com.example.linkyishop.data.retrofit.response.LinksItemDetail
 import com.example.linkyishop.databinding.ActivityDetailProductBinding
 import com.example.linkyishop.ui.main.MainActivity
 import com.example.linkyishop.ui.product.UpdateProductActivity
+import com.example.linkyishop.ui.product.UpdateProductViewModel
 import com.google.android.material.button.MaterialButton
 
 class DetailProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailProductBinding
     private val viewModel by viewModels<DetailProductViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
+    private val updateViewModel by viewModels<UpdateProductViewModel> {
         ViewModelFactory.getInstance(this)
     }
     private var productId: String? = null
@@ -51,6 +56,25 @@ class DetailProductActivity : AppCompatActivity() {
         }
 
         viewModel.fetchProductDetail(productId!!)
+        viewModel.isLoading.observe(this) {
+            if (it){
+                binding.progressBar.visibility = View.VISIBLE
+                binding.btnEditProduk.visibility = View.GONE
+                binding.deleteProductButton.visibility = View.GONE
+                binding.btnAddLink.visibility = View.GONE
+                binding.featureSwitch.visibility = View.GONE
+                binding.edAddLink.visibility = View.GONE
+                binding.addLink.visibility = View.GONE
+            }else{
+                binding.progressBar.visibility = View.GONE
+                binding.btnEditProduk.visibility = View.VISIBLE
+                binding.deleteProductButton.visibility = View.VISIBLE
+                binding.btnAddLink.visibility = View.VISIBLE
+                binding.featureSwitch.visibility = View.VISIBLE
+                binding.edAddLink.visibility = View.VISIBLE
+                binding.addLink.visibility = View.VISIBLE
+            }
+        }
         viewModel.productDetail.observe(this) {
             Glide.with(this)
                 .load(it.data?.thumbnail)
@@ -61,12 +85,14 @@ class DetailProductActivity : AppCompatActivity() {
                 addLinkTextViews(it)
             }
 
-            if (it.data?.isActive == true) {
-                binding.featureSwitch.isChecked = true
+            if (it.data?.isActive == false) {
+                binding.featureSwitch.isChecked = false
             }
         }
 
         with(binding){
+            topAppBar.setNavigationOnClickListener { finish() }
+
             deleteProductButton.setOnClickListener {
                 viewModel.deleteProduct(productId!!)
                 viewModel.deleteResponse.observe(this@DetailProductActivity) {
@@ -80,15 +106,6 @@ class DetailProductActivity : AppCompatActivity() {
                 }
             }
 
-            featureSwitch.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    // Aktivasi produk
-                }else{
-                    // Non-aktif produk
-                    Toast.makeText(this@DetailProductActivity, "Produk non-Aktif", Toast.LENGTH_SHORT).show()
-                }
-            }
-
             btnAddLink.setOnClickListener{
                 viewModel.addLink(productId!!, edAddLink.text.toString())
                 viewModel.deleteResponse.observe(this@DetailProductActivity) {
@@ -99,6 +116,17 @@ class DetailProductActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(this@DetailProductActivity, it.message, Toast.LENGTH_SHORT).show()
                     }
+                }
+            }
+            featureSwitch.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    // Aktivasi produk
+                    updateViewModel.productStatus(productId!!, "1")
+                    Toast.makeText(this@DetailProductActivity, "Produk Aktif", Toast.LENGTH_SHORT).show()
+                }else{
+                    // Non-aktif produk
+                    updateViewModel.productStatus(productId!!, "0")
+                    Toast.makeText(this@DetailProductActivity, "Produk non-Aktif", Toast.LENGTH_SHORT).show()
                 }
             }
         }

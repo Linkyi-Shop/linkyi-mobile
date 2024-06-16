@@ -49,5 +49,21 @@
     <string name="kategori">Kategori Produk</string>
     <string name="links">Link (tekan enter untuk terus menambahkan)</string>
     <string name="aktivasi">Aktivasi</string>
+    <string name="linkyi_page">Linkyi</string>
+    <string name="delete_dialog">Delete Item</string>
+    <string name="supporting_text_linkyi">Apakah anda yakin ingin menghapus item ini?</string>
+    <string name="cancel">Cancel</string>
+    <string name="decline">Tidak</string>
+    <string name="accept">Ya</string>
+    <string name="detail_page">Detail Produk</string>
+    <string name="link_page">Link Item</string>
+    <string name="link_text">Link Text</string>
+    <string name="name_text">Nama</string>
+    <string name="simpan">Simpan</string>
+    <string name="headline_text">Headline Text</string>
+    <string name="headline_page">Headline Item</string>
+    <string name="title_activity_add_linkyi">AddLinkyiActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 
 </resources>

@@ -50,6 +50,9 @@ class ProductFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getProducts()
+            viewModel.isLoading.observe(viewLifecycleOwner) {
+                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+            }
             viewModel.listProduct.observe(viewLifecycleOwner) { products ->
                 setUsersData(products)
             }

@@ -24,8 +24,8 @@ class DetailProductViewModel(private val repository: UserRepository) : ViewModel
     val deleteResponse: LiveData<DeleteProductResponse> get() = _deleteResponse
 
     fun fetchProductDetail(productId: String) {
-        _isLoading.value = true
         viewModelScope.launch {
+            _isLoading.value = true
             try {
                 val response = repository.getProductDetail(productId)
                 _productDetail.value = response

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.linkyishop.data.repository.UserRepository
 import com.example.linkyishop.di.Injection
 import com.example.linkyishop.ui.detailProduct.DetailProductViewModel
+import com.example.linkyishop.ui.linkyi.LinkyiViewModel
 import com.example.linkyishop.ui.login.LoginViewModel
 import com.example.linkyishop.ui.lupaPassword.LupaPasswordViewModel
 import com.example.linkyishop.ui.main.MainViewModel
@@ -36,6 +37,9 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(LupaPasswordViewModel::class.java) -> {
                 LupaPasswordViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(LinkyiViewModel::class.java) -> {
+                LinkyiViewModel(repository) as T
             }
             modelClass.isAssignableFrom(NewPasswordViewModel::class.java) -> {
                 NewPasswordViewModel(repository) as T
