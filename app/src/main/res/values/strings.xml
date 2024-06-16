@@ -63,7 +63,10 @@
     <string name="headline_text">Headline Text</string>
     <string name="headline_page">Headline Item</string>
     <string name="title_activity_add_linkyi">AddLinkyiActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_1">Link</string>
+    <string name="tab_text_2">Headline</string>
+    <string name="add_linkyi">Tambah Item</string>
+    <string name="content_tab_home">Link</string>
+    <string name="content_tab_head">Headline</string>
 
 </resources>

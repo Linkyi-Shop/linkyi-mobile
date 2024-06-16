@@ -1,5 +1,6 @@
 package com.example.linkyishop.ui.linkyi
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -56,9 +57,10 @@ class LinkyiFragment : Fragment() {
                 }
             }
         }
-//        binding.floatingActionButton.setOnClickListener {
-//            navigateToAddProduct()
-//        }
+        binding.floatingActionButton.setOnClickListener {
+            val intent = Intent(requireContext(), AddLinkyiActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
