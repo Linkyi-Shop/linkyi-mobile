@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     android:id="@+id/main"
     tools:context=".ui.aktivasiToko.AktivasiTokoActivity">
 
@@ -39,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:boxBackgroundColor="@color/md_theme_onPrimary"
+            app:boxBackgroundColor="@color/md_theme_surface"
             app:hintEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
 
@@ -53,48 +52,54 @@
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp" />
         </com.google.android.material.textfield.TextInputLayout>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/usernameEditTextLayout"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameEditTextLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="@color/md_theme_surface"
+        app:endIconMode="none"
+        app:hintEnabled="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/checkUsernameButton">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/usernameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:boxBackgroundColor="@color/md_theme_onPrimary"
-            app:hintEnabled="true"
-            app:endIconMode="none"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            android:hint="Username"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+    <Button
+        android:id="@+id/checkUsernameButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Check"
+        android:layout_marginStart="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/usernameEditTextLayout"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/usernameInput"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Username"
-                    android:gravity="start|center_vertical"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="0dp" />
-
-                <Button
-                    android:id="@+id/checkUsernameButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Check"
-                    android:layout_marginStart="8dp"/>
-            </LinearLayout>
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/descEditTextLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:boxBackgroundColor="@color/md_theme_onPrimary"
+            app:boxBackgroundColor="@color/md_theme_surface"
             app:hintEnabled="true"
             app:endIconMode="custom"
             app:endIconTint="#FFB93D"

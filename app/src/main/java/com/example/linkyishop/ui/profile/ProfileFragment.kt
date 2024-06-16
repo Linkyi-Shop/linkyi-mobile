@@ -63,7 +63,6 @@ class ProfileFragment : Fragment() {
         binding.updatePassword.setOnClickListener {
             viewModel.getUserToken()
             startActivity(Intent(activity, UpdatePasswordActivity::class.java))
-            activity?.finish()
         }
 
         return root

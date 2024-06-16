@@ -1,13 +1,52 @@
 package com.example.linkyishop.ui.linkyi
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.linkyishop.data.repository.UserRepository
+import com.example.linkyishop.data.retrofit.response.DetailProductResponse
+import com.example.linkyishop.data.retrofit.response.Links
+import com.example.linkyishop.data.retrofit.response.LinksDataItem
+import com.example.linkyishop.data.retrofit.response.LinkyiDetailResponse
+import com.example.linkyishop.data.retrofit.response.LinkyiResponse
+import kotlinx.coroutines.launch
 
-class LinkyiViewModel : ViewModel() {
+class LinkyiViewModel(private val repository: UserRepository) : ViewModel(){
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is linkyi Fragment"
+    private val _linkyi = MutableLiveData<Links?>()
+    val linkyi: LiveData<Links?> get() = _linkyi
+
+    private val _linkyiDetail = MutableLiveData<LinkyiDetailResponse?>()
+    val linkyiDetail: LiveData<LinkyiDetailResponse?> get() = _linkyiDetail
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    fun getLinkyi() {
+        viewModelScope.launch {
+            try {
+                val response = repository.getLinkyi()
+                _linkyi.value = response.data?.links
+            } catch (e: Exception) {
+                Log.e("Failed to fetch product detail", e.message ?: "Unknown error")
+            } finally {
+                _isLoading.value = false
+            }
+        }
     }
-    val text: LiveData<String> = _text
+    fun getLinkyi(id: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.getLinkyi(id)
+                _linkyiDetail.value = response
+            } catch (e: Exception) {
+                Log.e("Failed to fetch product detail", e.message ?: "Unknown error")
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
 }
