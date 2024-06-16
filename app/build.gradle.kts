@@ -78,5 +78,7 @@ dependencies {
 
     //tags input
     implementation ("com.nex3z:flow-layout:1.3.3")
+    //viewpager2
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
 
 }
