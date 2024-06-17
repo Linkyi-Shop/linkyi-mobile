@@ -1,60 +1,88 @@
 package com.example.linkyishop.ui.linkyi.tabs
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.linkyishop.R
+import com.example.linkyishop.data.ViewModelFactory
+import com.example.linkyishop.databinding.FragmentLinkBinding
+import com.example.linkyishop.databinding.FragmentLinkyiBinding
+import com.example.linkyishop.ui.linkyi.AddLinkyiActivity
+import com.example.linkyishop.ui.linkyi.LinkyiViewModel
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LinkFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LinkFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentLinkBinding? = null
+    private val viewModel by viewModels<LinkyiViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
+    private var isActive = "1"
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
+        _binding = FragmentLinkBinding.inflate(inflater, container, false)
+        with(binding) {
+            featureSwitch.setOnCheckedChangeListener { _, isChecked ->
+                isActive = if (isChecked) "1" else "0"
+            }
+
+            btnSimpan.setOnClickListener {
+                simpanLink()
+            }
+        }
+
+
+        val root: View = binding.root
+        return root
+    }
+
+    private fun simpanLink() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.addLink(binding.edEditLink.text.toString(), binding.edEditName.text.toString(), isActive)
+            viewModel.linkyiResponse.observe(viewLifecycleOwner) {
+                if (it?.success == true){
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    binding.edEditLink.setText("")
+                    binding.edEditName.setText("")
+                    binding.featureSwitch.isChecked = true
+                }
+            }
+//            viewModel.isLoading.observe(viewLifecycleOwner){
+//                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+//            }
+//            viewModel.linkyi.observe(viewLifecycleOwner) { linkyi ->
+//                if (linkyi != null) {
+//                    setLinkyiData(linkyi)
+//                }
+//            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_link, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentLinkBinding.bind(view)
+
+//        binding.floatingActionButton.setOnClickListener {
+//            val intent = Intent(requireContext(), AddLinkyiActivity::class.java)
+//            startActivity(intent)
+//        }
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LinkFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LinkFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

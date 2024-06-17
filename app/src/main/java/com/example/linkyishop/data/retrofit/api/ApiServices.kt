@@ -1,5 +1,6 @@
 package com.example.linkyishop.data.retrofit.api
 
+import com.example.linkyishop.data.retrofit.response.AddLinkyiResponse
 import com.example.linkyishop.data.retrofit.response.AddProductResponse
 import com.example.linkyishop.data.retrofit.response.AktivasiTokoResponse
 import com.example.linkyishop.data.retrofit.response.CekUsernameResponse
@@ -129,6 +130,16 @@ interface ApiServices {
         @Path("id") productId: String,
         @Path("link") linkId: String
     ): DeleteProductResponse
+
+    @FormUrlEncoded
+    @POST("dashboard/bio-links/create")
+    suspend fun addLinkyi(
+        @Header("Authorization") token: String,
+        @Field("link") link: String? = null,
+        @Field("type") type: String,
+        @Field("name") name: String,
+        @Field("is_active") is_active: String
+    ): AddLinkyiResponse
 
     @FormUrlEncoded
     @POST("profile/check-username")

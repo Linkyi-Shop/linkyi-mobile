@@ -3,6 +3,7 @@ package com.example.linkyishop.data.repository
 import com.example.linkyishop.data.preferences.UserModel
 import com.example.linkyishop.data.preferences.UserPreference
 import com.example.linkyishop.data.retrofit.api.ApiServices
+import com.example.linkyishop.data.retrofit.response.AddLinkyiResponse
 import com.example.linkyishop.data.retrofit.response.AktivasiTokoResponse
 import com.example.linkyishop.data.retrofit.response.CekUsernameResponse
 import com.example.linkyishop.data.retrofit.response.DeleteProductResponse
@@ -54,6 +55,10 @@ class UserRepository private constructor(private val pref: UserPreference, priva
 
     suspend fun deleteLinkProduct(productId: String, linkId: String): DeleteProductResponse {
         return apiServices.deleteLinkProduct("Bearer ${pref.getUserToken()}", productId, linkId)
+    }
+
+    suspend fun addLinkyi(link: String? = null, type: String, name: String, is_active: String): AddLinkyiResponse {
+        return apiServices.addLinkyi("Bearer ${pref.getUserToken()}", link, type, name, is_active)
     }
 
     suspend fun checkUsername(username: String): CekUsernameResponse {

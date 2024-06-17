@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.linkyishop.data.repository.UserRepository
+import com.example.linkyishop.data.retrofit.response.AddLinkyiResponse
 import com.example.linkyishop.data.retrofit.response.DetailProductResponse
 import com.example.linkyishop.data.retrofit.response.Links
 import com.example.linkyishop.data.retrofit.response.LinksDataItem
@@ -23,6 +24,9 @@ class LinkyiViewModel(private val repository: UserRepository) : ViewModel(){
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
+
+    private val _linkyiResponse = MutableLiveData<AddLinkyiResponse?>()
+    val linkyiResponse: LiveData<AddLinkyiResponse?> get() = _linkyiResponse
 
     fun getLinkyi() {
         viewModelScope.launch {
@@ -48,5 +52,28 @@ class LinkyiViewModel(private val repository: UserRepository) : ViewModel(){
             }
         }
     }
-
+    fun addLink(link: String, name: String, is_active: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.addLinkyi(link, "link", name, is_active)
+                _linkyiResponse.value = response
+            } catch (e: Exception) {
+                Log.e("Failed to fetch product detail", e.message ?: "Unknown error")
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+    fun addHeadline(name: String, is_active: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.addLinkyi(null, "headline", name, is_active)
+                _linkyiResponse.value = response
+            } catch (e: Exception) {
+                Log.e("Failed to fetch product detail", e.message ?: "Unknown error")
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
 }
