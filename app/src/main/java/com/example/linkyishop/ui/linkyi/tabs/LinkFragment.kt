@@ -23,7 +23,7 @@ class LinkFragment : Fragment() {
     private val viewModel by viewModels<LinkyiViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
-    private var isActive = true
+    private var isActive = "1"
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -56,7 +56,7 @@ class LinkFragment : Fragment() {
         _binding = FragmentLinkBinding.bind(view)
         with(binding) {
             featureSwitch.setOnCheckedChangeListener { _, isChecked ->
-                isActive = if (isChecked) true else false
+                isActive = if (isChecked) "1" else "0"
             }
 
             btnSimpan.setOnClickListener {
