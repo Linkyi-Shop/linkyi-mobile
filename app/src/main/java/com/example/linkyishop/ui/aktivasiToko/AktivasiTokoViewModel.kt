@@ -1,5 +1,6 @@
 package com.example.linkyishop.ui.aktivasiToko
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.linkyishop.data.repository.UserRepository
 import com.example.linkyishop.data.retrofit.response.AktivasiTokoResponse
 import com.example.linkyishop.data.retrofit.response.CekUsernameResponse
-import com.example.linkyishop.data.retrofit.response.ProfileResponse
+import com.example.linkyishop.data.retrofit.response.Store
+import com.example.linkyishop.data.retrofit.response.Visitors
 import com.example.linkyishop.ui.product.toRequestBody
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -23,8 +25,14 @@ class AktivasiTokoViewModel(private val repository: UserRepository) : ViewModel(
     private val _activateStoreResult = MutableLiveData<Result<AktivasiTokoResponse>>()
     val activateStoreResult: LiveData<Result<AktivasiTokoResponse>> = _activateStoreResult
 
-    private val _profileResult = MutableLiveData<ProfileResponse?>()
-    val profileResult: LiveData<ProfileResponse?> = _profileResult
+    private val _profileResult = MutableLiveData<Store>()
+    val profileResult: LiveData<Store> = _profileResult
+
+    private val _dashboard = MutableLiveData<Visitors>()
+    val dashboard: LiveData<Visitors> get() = _dashboard
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     fun checkUsername(username: String, isCheck: Boolean = true) {
         viewModelScope.launch {
@@ -70,16 +78,29 @@ class AktivasiTokoViewModel(private val repository: UserRepository) : ViewModel(
         }
     }
 
-    fun getProfile() {
+    fun getDashboard() {
         viewModelScope.launch {
             try {
-                val response = repository.getStoreProfile()
-                _profileResult.value = response
-            } catch (e: IOException) {
-                _profileResult.value = null
-            } catch (e: HttpException) {
-                _profileResult.value = null
+                val response = repository.getAnalyze()
+                _dashboard.value = response.data?.visitors!!
+            } catch (e: Exception) {
+                Log.e("Failed to fetch dashboard analyze", e.message ?: "Unknown error")
+            } finally {
+                _isLoading.value = false
             }
+        }
+    }
+
+    fun getProfile() {
+        viewModelScope.launch {
+           try {
+               val response = repository.getStoreProfile()
+               _profileResult.value = response.data?.store!!
+           } catch (e: Exception) {
+               Log.e("Failed to fetch store profile", e.message ?: "Unknown Error")
+           } finally {
+               _isLoading.value = false
+           }
         }
     }
 }

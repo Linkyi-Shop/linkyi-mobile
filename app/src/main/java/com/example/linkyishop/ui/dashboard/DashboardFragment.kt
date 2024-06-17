@@ -1,18 +1,26 @@
 package com.example.linkyishop.ui.dashboard
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.databinding.FragmentDashboardBinding
+import com.example.linkyishop.ui.aktivasiToko.AktivasiTokoViewModel
 
 class DashboardFragment : Fragment() {
-//    private val dashboardViewModel: DashboardViewModel by viewModels()
+
     private var _binding: FragmentDashboardBinding? = null
+    private val viewModel by viewModels<AktivasiTokoViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -26,34 +34,23 @@ class DashboardFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val sharedPref = activity?.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
-        val token = sharedPref?.getString("auth_token", null)
+        viewModel.dashboard.observe(viewLifecycleOwner, Observer { data ->
+            data?.let {
+                binding.totalBarang.text = it.product.toString()
+                binding.jumlahKlik.text = it.totalClick.toString()
+                binding.totalKategori.text = it.category.toString()
+                binding.jumlahPengunjung.text = it.visitor.toString()
+            }
+        })
 
-        if (token != null) {
-            // Observe data changes
-            dashboardViewModel.dashboardData.observe(viewLifecycleOwner, Observer { visitors ->
-                val total_barang = binding.totalBarang
-                val jumlah_klik = binding.jumlahKlik
-                val total_kategori = binding.totalKategori
-                val jumlah_pengunjung = binding.jumlahPengunjung
+        viewModel.isLoading.observe(viewLifecycleOwner, Observer { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        })
 
-                visitors?.let {
-                    total_barang.text = it.product.toString()
-                    jumlah_klik.text = it.totalClick.toString()
-                    total_kategori.text = it.category.toString()
-                    jumlah_pengunjung.text = it.visitor.toString()
-                }
-            })
+        viewModel.getDashboard()
 
-            // Fetch the dashboard data
-            dashboardViewModel.fetchDashboardData(token)
-        } else {
-            // Handle case where token is not available
-            // You might want to redirect to login or show an error message
-        }
         return root
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

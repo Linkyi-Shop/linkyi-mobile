@@ -53,7 +53,6 @@ class ProductFragment : Fragment() {
         }
 
     }
-
     override fun onResume() {
         super.onResume()
         viewLifecycleOwner.lifecycleScope.launch {
@@ -66,19 +65,15 @@ class ProductFragment : Fragment() {
             }
         }
     }
-
     private fun setUsersData(products: Products) {
         val adapter = ProductsAdapter(requireContext(), products)
         binding.rvProducts.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.rvProducts.adapter = adapter
     }
-
-
     private fun navigateToAddProduct() {
         val intent = Intent(requireContext(), AddProductActivity::class.java)
         startActivity(intent)
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

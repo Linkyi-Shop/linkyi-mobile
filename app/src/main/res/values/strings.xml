@@ -15,7 +15,7 @@
     <string name="title_login_page">Masuk</string>
     <string name="subjudul2">Masukan Email dan Password</string>
     <string name="loginButton">Masuk</string>
-    <string name="login_with_google">Continue With Google</string>
+    <string name="login_with_google">Login dengan Google</string>
     <string name="forgot_password">Lupa Password ?</string>
     <string name="or">Atau</string>
     <string name="dont_have_account">Belum punya Akun?</string>
@@ -68,5 +68,37 @@
     <string name="add_linkyi">Tambah Item</string>
     <string name="content_tab_home">Link</string>
     <string name="content_tab_head">Headline</string>
-
+    <string name="generate_base_link">https://linkyi.shop</string>
+    <string name="analisis_toko">Analisis Toko</string>
+    <string name="total_barang">Total Barang</string>
+    <string name="_0">0</string>
+    <string name="total_klik">Total Klik</string>
+    <string name="total_kategori">Total Kategori</string>
+    <string name="total_pengunjung">Total Pengunjung</string>
+    <string name="select_from_gallery">Pilih dari Galeri</string>
+    <string name="take_a_picture">Ambil Gambar</string>
+    <string name="submit">Kirim</string>
+    <string name="lengkapi_informasi_toko">Lengkapi Informasi Toko !</string>
+    <string name="nama_toko">Nama Toko</string>
+    <string name="username">Username</string>
+    <string name="check">Check</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="input_logo">Input Logo</string>
+    <string name="get_started">Getting Started</string>
+    <string name="edit_produk">Edit Produk</string>
+    <string name="tambahkan">Tambahkan</string>
+    <string name="ketik_link_baru">Ketik Link Baru</string>
+    <string name="hapus">Hapus</string>
+    <string name="password_baru">Password Baru</string>
+    <string name="konfirmasi_password">Konfirmasi Password</string>
+    <string name="otp">OTP</string>
+    <string name="update_password">Ubah Password</string>
+    <string name="password_sekarang">Password Sekarang</string>
+    <string name="ubah">Ubah</string>
+    <string name="title">Title</string>
+    <string name="category">Kategori</string>
+    <string name="price">Harga</string>
+    <string name="edit_toko">Edit Toko</string>
+    <string name="tema">Tema</string>
+    <string name="links2">Links</string>
 </resources>

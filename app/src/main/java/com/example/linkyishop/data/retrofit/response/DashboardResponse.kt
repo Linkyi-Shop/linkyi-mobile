@@ -29,7 +29,6 @@ data class Visitors(
 )
 
 data class DataDashboard(
-
 	@field:SerializedName("visitors")
 	val visitors: Visitors? = null
 )

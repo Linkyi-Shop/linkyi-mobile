@@ -45,7 +45,7 @@
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name" />
+            android:hint="@string/name_text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -63,7 +63,7 @@
             android:id="@+id/et_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Description" />
+            android:hint="@string/deskripsi" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -71,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Select From Gallery"
+        android:text="@string/select_from_gallery"
         app:layout_constraintTop_toBottomOf="@id/til_description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -84,7 +84,7 @@
         android:layout_marginTop="36dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="112dp"
-        android:text="Edit Toko"
+        android:text="@string/edit_toko"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
