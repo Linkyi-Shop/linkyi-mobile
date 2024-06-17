@@ -23,9 +23,6 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
     private val _loginResult = MutableLiveData<DataLogin>()
     val loginResult: LiveData<DataLogin> = _loginResult
 
-    private val _profileData = MutableLiveData<Store?>()
-    val profileData: LiveData<Store?> = _profileData
-
     fun login(email: String, password: String) {
         val client = ApiConfig.getApiService().login(email, password)
         client.enqueue(object : Callback<LoginResponse> {
@@ -45,22 +42,6 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                 Log.e("Loginewe", "onFailure: ${t.message.toString()}")
             }
         })
-    }
-
-    fun fetchProfile(token: String) {
-        viewModelScope.launch {
-            try {
-                val response = ApiConfig.getApiService().getStoreProfile("Bearer $token")
-                if (response.success == true && response.data?.store != null) {
-                    Log.d("ProfileViewModel", "Store Data: ${response.data.store}")
-                    _profileData.value = response.data.store
-                } else {
-                    Log.e("ProfileViewModel", "Error fetching profile: ${response.message}")
-                }
-            } catch (e: Exception) {
-                Log.e("ProfileViewModel", "Exception fetching profile", e)
-            }
-        }
     }
     fun saveUserToken(token: String) {
         viewModelScope.launch {

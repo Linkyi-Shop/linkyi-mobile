@@ -36,7 +36,7 @@
             card_view:layout_constraintEnd_toEndOf="@+id/profileImageView"
             card_view:layout_constraintStart_toStartOf="@+id/profileImageView"
             card_view:layout_constraintTop_toBottomOf="@+id/profileImageView"
-            tools:text="Nama" />
+            tools:text="@string/nama" />
 
         <TextView
             android:id="@+id/descTextView"
@@ -47,6 +47,6 @@
             card_view:layout_constraintEnd_toEndOf="@+id/nameTextView"
             card_view:layout_constraintStart_toStartOf="@+id/nameTextView"
             card_view:layout_constraintTop_toBottomOf="@+id/nameTextView"
-            tools:text="Harga" />
+            tools:text="@string/price" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

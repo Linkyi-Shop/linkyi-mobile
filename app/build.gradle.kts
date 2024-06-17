@@ -83,4 +83,7 @@ dependencies {
     implementation ("com.nex3z:flow-layout:1.3.3")
     //viewpager2
     implementation("androidx.viewpager2:viewpager2:1.0.0")
+
+    // Circle Image
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 }
