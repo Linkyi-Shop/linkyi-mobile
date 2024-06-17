@@ -21,7 +21,7 @@ class HeadlineFragment : Fragment() {
     private val viewModel by viewModels<LinkyiViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
-    private var isActive = true
+    private var isActive = "1"
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -55,7 +55,7 @@ class HeadlineFragment : Fragment() {
 
         with(binding) {
             featureSwitch.setOnCheckedChangeListener { _, isChecked ->
-                isActive = if (isChecked) true else false
+                isActive = if (isChecked) "1" else "0"
                 Toast.makeText(requireContext(), "Headline $isActive", Toast.LENGTH_SHORT).show()
             }
 

@@ -138,7 +138,7 @@ interface ApiServices {
         @Field("link") link: String? = null,
         @Field("type") type: String,
         @Field("name") name: String,
-        @Field("is_active") is_active: Boolean
+        @Field("is_active") is_active: String
     ): AddLinkyiResponse
 
     @DELETE("dashboard/bio-links/delete/{id}")
@@ -179,6 +179,24 @@ interface ApiServices {
         @Path("id") productId: String,
         @Field("is_active") isActive: String
     ): ProductStatusResponse
+
+    @FormUrlEncoded
+    @POST("dashboard/bio-links/update-status/{id}")
+    suspend fun LinkyiStatus(
+        @Header("Authorization") token: String,
+        @Path("id") productId: String,
+        @Field("is_active") is_active: String
+    ): AddLinkyiResponse
+
+    @FormUrlEncoded
+    @POST("dashboard/bio-links/update/{id}")
+    suspend fun LinkyiUpdate(
+        @Header("Authorization") token: String,
+        @Path("id") productId: String,
+        @Field("link") link: String? = null,
+        @Field("name") name: String,
+        @Field("is_active") is_active: String
+    ): AddLinkyiResponse
 
     @Multipart
     @POST("dashboard/products/update/{id}")

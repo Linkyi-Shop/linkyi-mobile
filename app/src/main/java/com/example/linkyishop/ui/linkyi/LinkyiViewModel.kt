@@ -65,7 +65,7 @@ class LinkyiViewModel(private val repository: UserRepository) : ViewModel(){
             }
         }
     }
-    fun addLink(link: String, name: String, is_active: Boolean) {
+    fun addLink(link: String, name: String, is_active: String) {
         viewModelScope.launch {
             try {
                 val response = repository.addLinkyi(link, "link", name, is_active)
@@ -77,10 +77,49 @@ class LinkyiViewModel(private val repository: UserRepository) : ViewModel(){
             }
         }
     }
-    fun addHeadline(name: String, is_active: Boolean) {
+
+    fun addHeadline(name: String, is_active: String) {
         viewModelScope.launch {
             try {
                 val response = repository.addLinkyi(null, "headline", name, is_active)
+                _linkyiResponse.value = response
+            } catch (e: Exception) {
+                Log.e("Failed to fetch product detail", e.message ?: "Unknown error")
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+    fun linkyiStatus(id: String, is_active: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.LinkyiStatus(id, is_active)
+                _linkyiResponse.value = response
+            } catch (e: Exception) {
+                Log.e("Failed to fetch product detail", e.message ?: "Unknown error")
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun linkyiUpdate(id: String, link: String, name: String, is_active: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.LinkyiUpdate(id, link, name, is_active)
+                _linkyiResponse.value = response
+            } catch (e: Exception) {
+                Log.e("Failed to fetch product detail", e.message ?: "Unknown error")
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun linkyiUpdate(id: String, name: String, is_active: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.LinkyiUpdate(id, null, name, is_active)
                 _linkyiResponse.value = response
             } catch (e: Exception) {
                 Log.e("Failed to fetch product detail", e.message ?: "Unknown error")

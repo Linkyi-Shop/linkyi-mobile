@@ -1,6 +1,7 @@
 package com.example.linkyishop.ui.linkyi
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -29,7 +30,40 @@ class DetailLinkyiActivity : AppCompatActivity() {
 
         val extraId = intent.getStringExtra(EXTRA_ID)
 
-        viewModel.getLinkyi(extraId!!)
+        setLinkyi(extraId!!)
+
+        with(binding) {
+            topAppBar.setNavigationOnClickListener { finish() }
+            featureSwitch.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked == true) {
+                    viewModel.linkyiStatus(extraId, "1")
+                    Toast.makeText(this@DetailLinkyiActivity, "Item Aktif", Toast.LENGTH_SHORT).show()
+                }else{
+                    viewModel.linkyiStatus(extraId, "0")
+                    Toast.makeText(this@DetailLinkyiActivity, "Item Tidak Aktif", Toast.LENGTH_SHORT).show()
+                }
+            }
+            btnSimpan.setOnClickListener {
+                viewModel.linkyiUpdate(
+                    extraId,
+                    edEditLink.text.toString(),
+                    edEditName.text.toString(),
+                    if (featureSwitch.isChecked == true) {
+                        "1"
+                    }else{
+                        "0"
+                    }
+                )
+                finish()
+                startActivity(getIntent())
+                Toast.makeText(this@DetailLinkyiActivity, "Item Berhasil Diupdate", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+
+    private fun setLinkyi(extraId: String) {
+        viewModel.getLinkyi(extraId)
         viewModel.linkyiDetail.observe(this){
             with(binding){
                 if(it?.data?.isActive == false){
@@ -53,10 +87,6 @@ class DetailLinkyiActivity : AppCompatActivity() {
                 }
             }
         }
-        with(binding) {
-            topAppBar.setNavigationOnClickListener { finish() }
-        }
-
     }
 
     companion object {
