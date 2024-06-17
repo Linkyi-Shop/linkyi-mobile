@@ -48,6 +48,14 @@ class ProductFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentProductBinding.bind(view)
 
+        binding.floatingActionButton.setOnClickListener {
+            navigateToAddProduct()
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getProducts()
             viewModel.isLoading.observe(viewLifecycleOwner) {
@@ -57,11 +65,6 @@ class ProductFragment : Fragment() {
                 setUsersData(products)
             }
         }
-
-        binding.floatingActionButton.setOnClickListener {
-            navigateToAddProduct()
-        }
-
     }
 
     private fun setUsersData(products: Products) {

@@ -195,10 +195,6 @@ class AddProductActivity : AppCompatActivity() {
                 viewModel.addProduct(title, price, category, multipartBody, isActive, linksArray)
                 viewModel.addProductResult.observe(this@AddProductActivity){
                     if (it.success == true){
-                        val intent = Intent(this@AddProductActivity, MainActivity::class.java).apply {
-                            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                        }
-                        startActivity(intent)
                         it.message?.showToast()
                         finish()
                     }else{

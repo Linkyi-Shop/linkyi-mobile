@@ -38,6 +38,7 @@ class LinkyiFragment : Fragment() {
     ): View {
 
         _binding = FragmentLinkyiBinding.inflate(inflater, container, false)
+
         val root: View = binding.root
         return root
     }
@@ -46,6 +47,15 @@ class LinkyiFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentLinkyiBinding.bind(view)
 
+        binding.floatingActionButton.setOnClickListener {
+            val intent = Intent(requireContext(), AddLinkyiActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getLinkyi()
             viewModel.isLoading.observe(viewLifecycleOwner){
@@ -57,11 +67,6 @@ class LinkyiFragment : Fragment() {
                 }
             }
         }
-        binding.floatingActionButton.setOnClickListener {
-            val intent = Intent(requireContext(), AddLinkyiActivity::class.java)
-            startActivity(intent)
-        }
-
     }
 
     private fun setLinkyiData(links: Links) {
