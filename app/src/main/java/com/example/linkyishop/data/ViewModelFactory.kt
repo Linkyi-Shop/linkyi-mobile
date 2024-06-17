@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.linkyishop.data.repository.UserRepository
 import com.example.linkyishop.di.Injection
+import com.example.linkyishop.ui.aktivasiToko.UpdateStoreViewModel
 import com.example.linkyishop.ui.detailProduct.DetailProductViewModel
 import com.example.linkyishop.ui.linkyi.LinkyiViewModel
 import com.example.linkyishop.ui.login.LoginViewModel
@@ -17,6 +18,7 @@ import com.example.linkyishop.ui.product.AddProductViewModel
 import com.example.linkyishop.ui.product.ProductViewModel
 import com.example.linkyishop.ui.product.UpdateProductViewModel
 import com.example.linkyishop.ui.register.RegisterViewModel
+import com.example.linkyishop.ui.tema.TemaViewModel
 import com.example.linkyishop.ui.updatePassword.UpdatePasswordViewModel
 
 class ViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
@@ -61,6 +63,12 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(UpdateProductViewModel::class.java) -> {
                 UpdateProductViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(UpdateStoreViewModel::class.java) -> {
+                UpdateStoreViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(TemaViewModel::class.java) -> {
+                TemaViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

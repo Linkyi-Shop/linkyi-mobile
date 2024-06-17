@@ -11,6 +11,9 @@ import com.example.linkyishop.data.repository.UserRepository
 import com.example.linkyishop.data.retrofit.api.ApiConfig
 import com.example.linkyishop.data.retrofit.response.DataLogin
 import com.example.linkyishop.data.retrofit.response.LoginResponse
+import com.example.linkyishop.data.retrofit.response.Profile
+import com.example.linkyishop.data.retrofit.response.ProfileResponse
+import com.example.linkyishop.data.retrofit.response.Store
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,6 +22,9 @@ import retrofit2.Response
 class LoginViewModel(private val repository: UserRepository) : ViewModel() {
     private val _loginResult = MutableLiveData<DataLogin>()
     val loginResult: LiveData<DataLogin> = _loginResult
+
+    private val _profileData = MutableLiveData<Store?>()
+    val profileData: LiveData<Store?> = _profileData
 
     fun login(email: String, password: String) {
         val client = ApiConfig.getApiService().login(email, password)
@@ -41,6 +47,21 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
         })
     }
 
+    fun fetchProfile(token: String) {
+        viewModelScope.launch {
+            try {
+                val response = ApiConfig.getApiService().getStoreProfile("Bearer $token")
+                if (response.success == true && response.data?.store != null) {
+                    Log.d("ProfileViewModel", "Store Data: ${response.data.store}")
+                    _profileData.value = response.data.store
+                } else {
+                    Log.e("ProfileViewModel", "Error fetching profile: ${response.message}")
+                }
+            } catch (e: Exception) {
+                Log.e("ProfileViewModel", "Exception fetching profile", e)
+            }
+        }
+    }
     fun saveUserToken(token: String) {
         viewModelScope.launch {
             repository.saveUserToken(token)

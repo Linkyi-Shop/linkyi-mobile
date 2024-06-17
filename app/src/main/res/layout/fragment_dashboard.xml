@@ -7,16 +7,174 @@
     tools:context=".ui.dashboard.DashboardFragment">
 
     <TextView
-        android:id="@+id/text_dashboard"
+        android:id="@+id/textAnalisis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="-600dp"
         android:layout_marginEnd="8dp"
+        android:text="Analisis Toko"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_total_barang"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="@color/md_theme_inversePrimary"
+        app:layout_constraintWidth_percent="0.45"
+        app:layout_constraintHeight_percent="0.25"
+        app:layout_constraintTop_toBottomOf="@id/textAnalisis"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/card_jumlah_klik">
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="14dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/text_total_barang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Barang"
+                android:textSize="16sp"
+                android:textColor="@color/md_theme_scrim" />
+
+            <TextView
+                android:id="@+id/total_barang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_scrim" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_jumlah_klik"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="@color/md_theme_inversePrimary"
+        app:layout_constraintWidth_percent="0.45"
+        app:layout_constraintHeight_percent="0.25"
+        app:layout_constraintTop_toBottomOf="@id/textAnalisis"
+        app:layout_constraintStart_toEndOf="@id/card_total_barang"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/text_jumlah_klik"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Klik"
+                android:textSize="14sp"
+                android:textColor="@color/md_theme_scrim" />
+
+            <TextView
+                android:id="@+id/jumlah_klik"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_scrim" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_total_kategori"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="@color/md_theme_inversePrimary"
+        app:layout_constraintWidth_percent="0.45"
+        app:layout_constraintHeight_percent="0.25"
+        app:layout_constraintTop_toBottomOf="@id/card_total_barang"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/card_jumlah_pengunjung">
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/text_total_kategori"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Kategori"
+                android:textSize="14sp"
+                android:textColor="@color/md_theme_scrim" />
+
+            <TextView
+                android:id="@+id/total_kategori"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_scrim" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_jumlah_pengunjung"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="@color/md_theme_inversePrimary"
+        app:layout_constraintWidth_percent="0.45"
+        app:layout_constraintHeight_percent="0.25"
+        app:layout_constraintTop_toBottomOf="@id/card_jumlah_klik"
+        app:layout_constraintStart_toEndOf="@id/card_total_kategori"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/text_jumlah_pengunjung"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Pengunjung"
+                android:textSize="14sp"
+                android:textColor="@color/md_theme_scrim" />
+
+            <TextView
+                android:id="@+id/jumlah_pengunjung"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_scrim" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
