@@ -52,7 +52,20 @@ class LinkyiViewModel(private val repository: UserRepository) : ViewModel(){
             }
         }
     }
-    fun addLink(link: String, name: String, is_active: String) {
+
+    fun deleteLinkyi(id: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.deleteLinkyi(id)
+                _linkyiResponse.value = response
+            } catch (e: Exception) {
+                Log.e("Failed to fetch product detail", e.message ?: "Unknown error")
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+    fun addLink(link: String, name: String, is_active: Boolean) {
         viewModelScope.launch {
             try {
                 val response = repository.addLinkyi(link, "link", name, is_active)
@@ -64,7 +77,7 @@ class LinkyiViewModel(private val repository: UserRepository) : ViewModel(){
             }
         }
     }
-    fun addHeadline(name: String, is_active: String) {
+    fun addHeadline(name: String, is_active: Boolean) {
         viewModelScope.launch {
             try {
                 val response = repository.addLinkyi(null, "headline", name, is_active)

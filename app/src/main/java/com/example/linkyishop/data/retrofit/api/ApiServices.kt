@@ -138,7 +138,13 @@ interface ApiServices {
         @Field("link") link: String? = null,
         @Field("type") type: String,
         @Field("name") name: String,
-        @Field("is_active") is_active: String
+        @Field("is_active") is_active: Boolean
+    ): AddLinkyiResponse
+
+    @DELETE("dashboard/bio-links/delete/{id}")
+    suspend fun deleteLinkyi(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
     ): AddLinkyiResponse
 
     @FormUrlEncoded

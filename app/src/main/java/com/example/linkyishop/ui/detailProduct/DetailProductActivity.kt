@@ -55,7 +55,6 @@ class DetailProductActivity : AppCompatActivity() {
             navigateToUpdateProduct(productId.toString())
         }
 
-        viewModel.fetchProductDetail(productId!!)
         viewModel.isLoading.observe(this) {
             if (it){
                 binding.progressBar.visibility = View.VISIBLE
@@ -75,20 +74,7 @@ class DetailProductActivity : AppCompatActivity() {
                 binding.addLink.visibility = View.VISIBLE
             }
         }
-        viewModel.productDetail.observe(this) {
-            Glide.with(this)
-                .load(it.data?.thumbnail)
-                .into(binding.productImage)
-            binding.productName.text = it.data?.title
-            binding.productPrice.text = "Rp. ${it.data?.price}"
-            it.data?.links.let {
-                addLinkTextViews(it)
-            }
-
-            if (it.data?.isActive == false) {
-                binding.featureSwitch.isChecked = false
-            }
-        }
+        setProduct()
 
         with(binding){
             topAppBar.setNavigationOnClickListener { finish() }
@@ -111,8 +97,7 @@ class DetailProductActivity : AppCompatActivity() {
                 viewModel.deleteResponse.observe(this@DetailProductActivity) {
                     if (it.success == true) {
                         Toast.makeText(this@DetailProductActivity, it.message, Toast.LENGTH_SHORT).show()
-                        finish()
-                        startActivity(getIntent())
+                        setProduct()
                     } else {
                         Toast.makeText(this@DetailProductActivity, it.message, Toast.LENGTH_SHORT).show()
                     }
@@ -132,12 +117,35 @@ class DetailProductActivity : AppCompatActivity() {
         }
     }
 
+    private fun setProduct() {
+        viewModel.fetchProductDetail(productId!!)
+        viewModel.productDetail.observe(this) {
+            Glide.with(this)
+                .load(it.data?.thumbnail)
+                .into(binding.productImage)
+            binding.productName.text = it.data?.title
+            binding.productPrice.text = "Rp. ${it.data?.price}"
+            it.data?.links.let {
+                clearLinksContainer()
+                addLinkTextViews(it)
+            }
+
+            if (it.data?.isActive == false) {
+                binding.featureSwitch.isChecked = false
+            }
+        }
+    }
+
     private fun navigateToUpdateProduct(productId: String) {
         val intent = Intent(this, UpdateProductActivity::class.java)
         intent.putExtra("PRODUCT_ID", productId)
         startActivity(intent)
     }
 
+    private fun clearLinksContainer() {
+        val linksContainer = findViewById<LinearLayout>(R.id.links_container)
+        linksContainer.removeAllViews()
+    }
     private fun addLinkTextViews(links: List<LinksItemDetail?>?) {
         val linksContainer = findViewById<LinearLayout>(R.id.links_container)
         if (links != null) {
@@ -180,8 +188,7 @@ class DetailProductActivity : AppCompatActivity() {
                         viewModel.deleteResponse.observe(this@DetailProductActivity) {
                             if (it.success == true) {
                                 Toast.makeText(this@DetailProductActivity, it.message, Toast.LENGTH_SHORT).show()
-                                finish()
-                                startActivity(getIntent())
+                                linksContainer.removeView(horizontalLayout)
                             } else {
                                 Toast.makeText(this@DetailProductActivity, it.message, Toast.LENGTH_SHORT).show()
                             }

@@ -20,7 +20,7 @@ import com.example.linkyishop.ui.product.ProductsAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
-class LinkyiFragment : Fragment() {
+class LinkyiFragment : Fragment(), FragmentRefreshListener {
 
     private var _binding: FragmentLinkyiBinding? = null
     private val viewModel by viewModels<LinkyiViewModel> {
@@ -56,6 +56,10 @@ class LinkyiFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        updateList()
+    }
+
+    private fun updateList() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getLinkyi()
             viewModel.isLoading.observe(viewLifecycleOwner){
@@ -70,7 +74,7 @@ class LinkyiFragment : Fragment() {
     }
 
     private fun setLinkyiData(links: Links) {
-        val adapter = LinkyiAdapter(requireContext(), links)
+        val adapter = LinkyiAdapter(requireContext(), links, viewModel, this)
         binding.rvProducts.layoutManager = LinearLayoutManager(requireContext())
         binding.rvProducts.adapter = adapter
     }
@@ -79,4 +83,9 @@ class LinkyiFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onRefresh() {
+        updateList()
+    }
+
 }

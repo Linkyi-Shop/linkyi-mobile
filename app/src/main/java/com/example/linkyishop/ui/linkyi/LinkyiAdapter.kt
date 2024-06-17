@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.linkyishop.R
+import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.data.retrofit.response.DataItem
 import com.example.linkyishop.data.retrofit.response.Links
 import com.example.linkyishop.data.retrofit.response.LinksDataItem
@@ -18,7 +20,12 @@ import com.example.linkyishop.databinding.LinkyiCardBinding
 import com.example.linkyishop.ui.detailProduct.DetailProductActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class LinkyiAdapter(private val context: Context, private val links: Links) : ListAdapter<DataItem, LinkyiAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class LinkyiAdapter(
+    private val context: Context,
+    private val links: Links,
+    private val viewModel: LinkyiViewModel,
+    private val refreshListener: FragmentRefreshListener
+) : ListAdapter<DataItem, LinkyiAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItem>() {
@@ -69,7 +76,8 @@ class LinkyiAdapter(private val context: Context, private val links: Links) : Li
                         dialog.dismiss()
                     }
                     .setPositiveButton(context.getString(R.string.accept)) { dialog, which ->
-                        dialog.dismiss()
+                        viewModel.deleteLinkyi(link?.id!!)
+                        refreshListener.onRefresh()
                     }
                     .show()
                 true
