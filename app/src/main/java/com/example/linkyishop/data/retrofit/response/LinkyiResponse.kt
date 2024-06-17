@@ -83,7 +83,7 @@ data class LinksDataItem(
 	val thumbnail: Any? = null,
 
 	@field:SerializedName("is_active")
-	val isActive: Boolean? = null,
+	val is_active: Boolean? = null,
 
 	@field:SerializedName("name")
 	val name: String? = null,

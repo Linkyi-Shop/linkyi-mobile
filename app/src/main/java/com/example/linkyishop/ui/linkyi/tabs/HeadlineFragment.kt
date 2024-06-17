@@ -21,7 +21,7 @@ class HeadlineFragment : Fragment() {
     private val viewModel by viewModels<LinkyiViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
-    private var isActive = "1"
+    private var isActive = true
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -31,16 +31,6 @@ class HeadlineFragment : Fragment() {
     ): View {
 
         _binding = FragmentHeadlineBinding.inflate(inflater, container, false)
-        with(binding) {
-            featureSwitch.setOnCheckedChangeListener { _, isChecked ->
-                isActive = if (isChecked) "1" else "0"
-            }
-
-            btnSimpan.setOnClickListener {
-                simpanHeadline()
-            }
-        }
-
 
         val root: View = binding.root
         return root
@@ -56,14 +46,6 @@ class HeadlineFragment : Fragment() {
                     binding.featureSwitch.isChecked = true
                 }
             }
-//            viewModel.isLoading.observe(viewLifecycleOwner){
-//                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
-//            }
-//            viewModel.linkyi.observe(viewLifecycleOwner) { linkyi ->
-//                if (linkyi != null) {
-//                    setLinkyiData(linkyi)
-//                }
-//            }
         }
     }
 
@@ -71,10 +53,16 @@ class HeadlineFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHeadlineBinding.bind(view)
 
-//        binding.floatingActionButton.setOnClickListener {
-//            val intent = Intent(requireContext(), AddLinkyiActivity::class.java)
-//            startActivity(intent)
-//        }
+        with(binding) {
+            featureSwitch.setOnCheckedChangeListener { _, isChecked ->
+                isActive = if (isChecked) true else false
+                Toast.makeText(requireContext(), "Headline $isActive", Toast.LENGTH_SHORT).show()
+            }
+
+            btnSimpan.setOnClickListener {
+                simpanHeadline()
+            }
+        }
 
     }
 

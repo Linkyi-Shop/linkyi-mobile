@@ -57,8 +57,11 @@ class UserRepository private constructor(private val pref: UserPreference, priva
         return apiServices.deleteLinkProduct("Bearer ${pref.getUserToken()}", productId, linkId)
     }
 
-    suspend fun addLinkyi(link: String? = null, type: String, name: String, is_active: String): AddLinkyiResponse {
+    suspend fun addLinkyi(link: String? = null, type: String, name: String, is_active: Boolean): AddLinkyiResponse {
         return apiServices.addLinkyi("Bearer ${pref.getUserToken()}", link, type, name, is_active)
+    }
+    suspend fun deleteLinkyi(id: String): AddLinkyiResponse {
+        return apiServices.deleteLinkyi("Bearer ${pref.getUserToken()}", id)
     }
 
     suspend fun checkUsername(username: String): CekUsernameResponse {

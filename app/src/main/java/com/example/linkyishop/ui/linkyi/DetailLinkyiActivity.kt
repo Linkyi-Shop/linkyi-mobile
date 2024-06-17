@@ -32,7 +32,9 @@ class DetailLinkyiActivity : AppCompatActivity() {
         viewModel.getLinkyi(extraId!!)
         viewModel.linkyiDetail.observe(this){
             with(binding){
-
+                if(it?.data?.isActive == false){
+                    featureSwitch.isChecked = false
+                }
                 edEditLink.setText(it?.data?.link)
                 edEditName.setText(it?.data?.name)
                 edEditLink.addTextChangedListener {text ->
