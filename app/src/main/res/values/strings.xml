@@ -10,7 +10,7 @@
     <string name="subjudul">Buat Akun Terlebih dahulu</string>
     <string name="name">Username</string>
     <string name="email">Email</string>
-    <string name="password">Password\n</string>
+    <string name="password">Password</string>
     <string name="signupButton">Daftar</string>
     <string name="title_login_page">Masuk</string>
     <string name="subjudul2">Masukan Email dan Password</string>
@@ -101,4 +101,6 @@
     <string name="edit_toko">Edit Toko</string>
     <string name="tema">Tema</string>
     <string name="links2">Links</string>
+    <string name="pilihan_tema">Pilihan Tema</string>
+    <string name="update_store">Update Store</string>
 </resources>

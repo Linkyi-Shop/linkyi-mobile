@@ -1,5 +1,6 @@
 package com.example.linkyishop.ui.tema
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -9,6 +10,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.linkyishop.R
 import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.databinding.ActivityTemaBinding
+import com.example.linkyishop.ui.main.MainActivity
+import com.example.linkyishop.ui.profile.ProfileFragment
 
 class TemaActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTemaBinding
@@ -23,6 +26,12 @@ class TemaActivity : AppCompatActivity() {
 
         binding = ActivityTemaBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.topAppBar.setOnClickListener {
+            val intent = Intent(this@TemaActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish() 
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

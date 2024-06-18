@@ -15,6 +15,7 @@ import com.example.linkyishop.R
 import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.databinding.ActivityUpdatePasswordBinding
 import com.example.linkyishop.ui.main.MainActivity
+import com.example.linkyishop.ui.profile.ProfileFragment
 
 class UpdatePasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUpdatePasswordBinding
@@ -31,13 +32,10 @@ class UpdatePasswordActivity : AppCompatActivity() {
 
         observeUpdatePassword()
 
-        val backButton: ImageView = findViewById(R.id.backButton)
-        backButton.setOnClickListener {
-            val intent = Intent(this@UpdatePasswordActivity, MainActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            }
+        binding.topAppBar.setOnClickListener {
+            val intent = Intent(this@UpdatePasswordActivity, MainActivity::class.java)
             startActivity(intent)
-            finish() // Or use a navigation method to go back to the Profile fragment
+            finish()
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

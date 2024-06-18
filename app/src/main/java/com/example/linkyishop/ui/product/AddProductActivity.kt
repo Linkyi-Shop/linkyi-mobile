@@ -1,6 +1,7 @@
 package com.example.linkyishop.ui.product
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -17,6 +18,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -27,10 +29,12 @@ import com.example.linkyishop.data.preferences.dataStore
 import com.example.linkyishop.databinding.ActivityAddProductBinding
 import com.example.linkyishop.ui.main.MainActivity
 import com.nex3z.flowlayout.FlowLayout
+import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 class AddProductActivity : AppCompatActivity() {
     private val viewModel by viewModels<AddProductViewModel> {
@@ -140,9 +144,40 @@ class AddProductActivity : AppCompatActivity() {
     ) { uri: Uri? ->
         if (uri != null) {
             currentImageUri = uri
+            val timeStamp = System.currentTimeMillis()
+            val destinationFileName = "cropped_image_$timeStamp.jpg"
+            val destinationUri = Uri.fromFile(File(cacheDir, destinationFileName))
+            val options = UCrop.Options().apply {
+                setCompressionFormat(Bitmap.CompressFormat.JPEG)
+                setCompressionQuality(80)
+                setToolbarColor(ContextCompat.getColor(this@AddProductActivity, R.color.md_theme_primary))
+                setToolbarWidgetColor(ContextCompat.getColor(this@AddProductActivity, R.color.md_theme_onTertiary))
+                setActiveControlsWidgetColor(ContextCompat.getColor(this@AddProductActivity, R.color.md_theme_primary))
+            }
+            UCrop.of(uri, destinationUri)
+                .withOptions(options)
+                .start(this)
             showImage()
         } else {
             Log.d("Photo Picker", "No media selected")
+        }
+    }
+
+    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
+            val resultUri = data?.let { UCrop.getOutput(it) }
+            resultUri?.let {
+                currentImageUri = resultUri
+                showImage()
+            }
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+            val cropError = UCrop.getError(data!!)
+            cropError?.let {
+                Log.e("UCrop", "UCrop error: $cropError")
+                Toast.makeText(this, "Crop error: $cropError", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -182,7 +217,7 @@ class AddProductActivity : AppCompatActivity() {
             }
 
             // Mendapatkan file thumbnail dari URI
-            val imageFile = uriToFile(it, this)
+            val imageFile = uriToFile(it, this).reduceFileImage()
             val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
             val multipartBody = MultipartBody.Part.createFormData(
                 "thumbnail",
