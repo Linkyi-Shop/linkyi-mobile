@@ -19,8 +19,10 @@ import com.example.linkyishop.databinding.ActivityUpdateStoreBinding
 import com.example.linkyishop.ui.login.LoginViewModel
 import com.example.linkyishop.ui.main.MainActivity
 import com.example.linkyishop.ui.product.asRequestBody
+import com.example.linkyishop.ui.product.reduceFileImage
 import com.example.linkyishop.ui.product.toRequestBody
 import com.example.linkyishop.ui.product.uriToFile
+import com.example.linkyishop.ui.profile.ProfileFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 
@@ -46,10 +48,8 @@ class UpdateStoreActivity : AppCompatActivity() {
             insets
         }
 
-        binding.backButton.setOnClickListener {
-            val intent = Intent(this@UpdateStoreActivity, MainActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            }
+        binding.topAppBar.setOnClickListener {
+            val intent = Intent(this@UpdateStoreActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -113,7 +113,7 @@ class UpdateStoreActivity : AppCompatActivity() {
     }
 
     private fun uriToMultipartBody(uri: Uri): MultipartBody.Part? {
-        val file = uriToFile(uri, this)
+        val file = uriToFile(uri, this).reduceFileImage()
         val requestFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
         return MultipartBody.Part.createFormData("logo", file.name, requestFile)
     }

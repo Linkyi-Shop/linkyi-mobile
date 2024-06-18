@@ -99,7 +99,7 @@ class UpdateProductActivity : AppCompatActivity() {
     }
 
     private fun uriToMultipartBody(uri: Uri): MultipartBody.Part? {
-        val file = uriToFile(uri, this)
+        val file = uriToFile(uri, this).reduceFileImage()
         val requestFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
         return MultipartBody.Part.createFormData("thumbnail", file.name, requestFile)
     }

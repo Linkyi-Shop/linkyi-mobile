@@ -17,6 +17,7 @@ import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.databinding.ActivityAktivasiTokoBinding
 import com.example.linkyishop.ui.main.MainActivity
 import com.example.linkyishop.ui.product.asRequestBody
+import com.example.linkyishop.ui.product.reduceFileImage
 import com.example.linkyishop.ui.product.uriToFile
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -62,7 +63,7 @@ class AktivasiTokoActivity : AppCompatActivity() {
             val logoUri = binding.productLogo.tag as Uri?
 
             if (name.isNotEmpty() && username.isNotEmpty() && description.isNotEmpty() && logoUri != null) {
-                val logoFile = uriToFile(logoUri, this)
+                val logoFile = uriToFile(logoUri, this).reduceFileImage()
                 val requestFile = logoFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
                 val logoPart = MultipartBody.Part.createFormData("logo", logoFile.name, requestFile)
 

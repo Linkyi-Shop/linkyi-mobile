@@ -1,8 +1,9 @@
 package com.example.linkyishop.ui.otp
 
-
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -15,7 +16,6 @@ import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.databinding.ActivityOtpVerifBinding
 import com.example.linkyishop.ui.aktivasiToko.AktivasiTokoActivity
 import com.example.linkyishop.ui.login.LoginViewModel
-import com.example.linkyishop.ui.main.MainActivity
 
 class OtpVerifActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOtpVerifBinding
@@ -27,6 +27,7 @@ class OtpVerifActivity : AppCompatActivity() {
     private val loginViewModel by viewModels<LoginViewModel> {
         ViewModelFactory.getInstance(this)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,6 +42,8 @@ class OtpVerifActivity : AppCompatActivity() {
 
         // Dapatkan email dari Intent
         val email = intent.getStringExtra(EXTRA_EMAIL)
+
+        setupOtpInputs()
 
         binding.btnVerify.setOnClickListener {
             val otpCode = getOtpCode()
@@ -82,6 +85,22 @@ class OtpVerifActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupOtpInputs() {
+        val otpFields = listOf(binding.etOtp1, binding.etOtp2, binding.etOtp3, binding.etOtp4, binding.etOtp5, binding.etOtp6)
+
+        for (i in otpFields.indices) {
+            otpFields[i].addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable?) {
+                    if (s?.length == 1 && i < otpFields.size - 1) {
+                        otpFields[i + 1].requestFocus()
+                    }
+                }
+            })
+        }
+    }
+
     private fun getOtpCode(): Int? {
         val otp1 = binding.etOtp1.text.toString()
         val otp2 = binding.etOtp2.text.toString()
@@ -108,6 +127,7 @@ class OtpVerifActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_EMAIL = "extra_email"
     }
+
     private fun Boolean.showLoading() {
         binding.progressBar.visibility = if (this) View.VISIBLE else View.GONE
     }
