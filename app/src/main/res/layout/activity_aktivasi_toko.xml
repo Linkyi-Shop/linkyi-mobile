@@ -27,7 +27,7 @@
             android:id="@+id/welcomeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lengkapi Informasi Toko !"
+            android:text="@string/lengkapi_informasi_toko"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_gravity="center"
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:hint="Name"
+                android:hint="@string/nama_toko"
                 android:gravity="start|center_vertical"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp" />
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="start|center_vertical"
-            android:hint="Username"
+            android:hint="@string/username"
             android:paddingStart="0dp"
             android:paddingEnd="0dp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -86,7 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Check"
+        android:text="@string/check"
         android:layout_marginStart="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/usernameEditTextLayout"
@@ -109,7 +109,7 @@
                 android:id="@+id/descriptionInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Deskripsi"
+                android:hint="@string/deskripsi"
                 android:gravity="start|center_vertical"
                 android:inputType="text"
                 android:focusable="true"
@@ -129,7 +129,7 @@
                 android:id="@+id/galleryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Input Logo"
+                android:text="@string/input_logo"
                 android:textSize="18sp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
@@ -142,7 +142,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="4dp"
                 android:layout_marginVertical="8dp"
-                android:text="Select from Gallery"
+                android:text="@string/select_from_gallery"
                 app:layout_constraintStart_toStartOf="parent"/>
         </LinearLayout>
 
@@ -152,7 +152,7 @@
             android:layout_height="55dp"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
-            android:text="Get Started"
+            android:text="@string/get_started"
             android:layout_marginTop="60dp" />
 
         <ProgressBar

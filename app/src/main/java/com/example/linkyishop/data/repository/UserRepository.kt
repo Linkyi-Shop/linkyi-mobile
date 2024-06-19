@@ -6,15 +6,14 @@ import com.example.linkyishop.data.retrofit.api.ApiServices
 import com.example.linkyishop.data.retrofit.response.AddLinkyiResponse
 import com.example.linkyishop.data.retrofit.response.AktivasiTokoResponse
 import com.example.linkyishop.data.retrofit.response.CekUsernameResponse
+import com.example.linkyishop.data.retrofit.response.DashboardResponse
 import com.example.linkyishop.data.retrofit.response.DeleteProductResponse
 import com.example.linkyishop.data.retrofit.response.DetailProductResponse
-import com.example.linkyishop.data.retrofit.response.Links
 import com.example.linkyishop.data.retrofit.response.LinkyiDetailResponse
 import com.example.linkyishop.data.retrofit.response.LinkyiResponse
 import com.example.linkyishop.data.retrofit.response.LupaPasswordResponse
 import com.example.linkyishop.data.retrofit.response.NewPassword2Response
 import com.example.linkyishop.data.retrofit.response.ProductStatusResponse
-import com.example.linkyishop.data.retrofit.response.ProductsResponse
 import com.example.linkyishop.data.retrofit.response.ProfileResponse
 import com.example.linkyishop.data.retrofit.response.RegisterResponse
 import com.example.linkyishop.data.retrofit.response.ResendOtpResponse
@@ -40,6 +39,10 @@ class UserRepository private constructor(private val pref: UserPreference, priva
     }
     suspend fun getLinkyi(): LinkyiResponse {
         return apiServices.getLinkyi("Bearer ${pref.getUserToken()}")
+    }
+
+    suspend fun getAnalyze(): DashboardResponse {
+        return apiServices.getAnalyzeStore("Bearer ${pref.getUserToken()}")
     }
 
     suspend fun getLinkyi(id: String): LinkyiDetailResponse {

@@ -21,17 +21,6 @@ class OtpViewModel(private val repository: UserRepository) : ViewModel() {
     private val _resendOtpResult = MutableLiveData<Result<ResendOtpResponse>>()
     val resendOtpResult: LiveData<Result<ResendOtpResponse>> = _resendOtpResult
 
-//    fun verifyOtp(code: Int, email: String?) {
-//        viewModelScope.launch {
-//            try {
-//                val response = repository.otpVerification(code, email)
-//                _otpResult.value = (response)
-//            } catch (e: Exception) {
-//                Log.e("OTP Failed", e.message.toString())
-//            }
-//        }
-//    }
-
     fun verifyOTP(code: Int, email: String?) {
         val client = ApiConfig.getApiService().OTP(code, email)
         client.enqueue(object : Callback<OTPResponse> {
@@ -60,11 +49,6 @@ class OtpViewModel(private val repository: UserRepository) : ViewModel() {
             } catch (e: Exception) {
                 _resendOtpResult.value = Result.failure(e)
             }
-        }
-    }
-    fun saveUserToken(token: String) {
-        viewModelScope.launch {
-            repository.saveUserToken(token)
         }
     }
 }
