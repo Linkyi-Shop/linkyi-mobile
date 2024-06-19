@@ -41,7 +41,6 @@ class AddProductActivity : AppCompatActivity() {
     private val viewModel by viewModels<AddProductViewModel> {
         ViewModelFactory.getInstance(this)
     }
-
     private lateinit var binding: ActivityAddProductBinding
     private lateinit var userPreference: UserPreference
     private var isActive: String = "0"
