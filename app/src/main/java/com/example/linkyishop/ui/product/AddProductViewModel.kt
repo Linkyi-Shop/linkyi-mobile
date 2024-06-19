@@ -9,6 +9,7 @@ import com.example.linkyishop.data.repository.UserRepository
 import com.example.linkyishop.data.retrofit.api.ApiConfig
 import com.example.linkyishop.data.retrofit.response.AddProductResponse
 import com.example.linkyishop.data.retrofit.response.DeleteProductResponse
+import com.example.linkyishop.data.retrofit.response.PredictionResponse
 import com.example.linkyishop.data.retrofit.response.ProductsResponse
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -21,6 +22,9 @@ import java.io.File
 class AddProductViewModel(private val repository: UserRepository) : ViewModel() {
     private val _addProductResult = MutableLiveData<DeleteProductResponse>()
     val addProductResult: LiveData<DeleteProductResponse> = _addProductResult
+
+    private val _predictionResult = MutableLiveData<PredictionResponse>()
+    val predictionResult: LiveData<PredictionResponse> = _predictionResult
 
     fun addProduct(
         title: String,
@@ -44,6 +48,20 @@ class AddProductViewModel(private val repository: UserRepository) : ViewModel() 
                     titlePart, pricePart, categoryPart, thumbnail, isActivePart, linksParts
                 )
                 _addProductResult.value = response
+                Log.e("AddProduct", "Success: ${response}")
+            } catch (e: Exception) {
+                Log.e("AddProduct", "Exception: ${e.message.toString()}")
+            }
+        }
+    }
+
+    fun predictImage(
+        thumbnail: MultipartBody.Part,
+    ) {
+        viewModelScope.launch {
+            try {
+                val response = ApiConfig.getApiServiceMl().predictImage("kokojiji", thumbnail)
+                _predictionResult.value = response
                 Log.e("AddProduct", "Success: ${response}")
             } catch (e: Exception) {
                 Log.e("AddProduct", "Exception: ${e.message.toString()}")
