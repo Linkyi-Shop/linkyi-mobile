@@ -12,6 +12,7 @@ import com.example.linkyishop.data.retrofit.response.LoginResponse
 import com.example.linkyishop.data.retrofit.response.LupaPasswordResponse
 import com.example.linkyishop.data.retrofit.response.NewPassword2Response
 import com.example.linkyishop.data.retrofit.response.OTPResponse
+import com.example.linkyishop.data.retrofit.response.PredictionResponse
 import com.example.linkyishop.data.retrofit.response.ProductStatusResponse
 import com.example.linkyishop.data.retrofit.response.ProductsResponse
 import com.example.linkyishop.data.retrofit.response.ProfileResponse
@@ -228,4 +229,11 @@ interface ApiServices {
     suspend fun getStoreProfile(
         @Header("Authorization") token: String
     ): ProfileResponse
+
+    @Multipart
+    @POST("predict")
+    suspend fun predictImage(
+        @Header("X-SECRET-KEY") secret: String,
+        @Part file: MultipartBody.Part
+    ): PredictionResponse
 }
