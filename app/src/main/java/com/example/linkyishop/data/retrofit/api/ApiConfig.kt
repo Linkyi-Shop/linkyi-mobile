@@ -19,5 +19,16 @@ class ApiConfig {
                 .build()
             return retrofit.create(ApiServices::class.java)
         }
+        fun getApiServiceMl(): ApiServices {
+            val loggingInterceptor =
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://mlapi.linkyi.shop/")
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            return retrofit.create(ApiServices::class.java)
+        }
     }
 }

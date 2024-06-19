@@ -28,6 +28,7 @@ import com.example.linkyishop.data.preferences.UserPreference
 import com.example.linkyishop.data.preferences.dataStore
 import com.example.linkyishop.databinding.ActivityAddProductBinding
 import com.example.linkyishop.ui.main.MainActivity
+import com.google.android.material.snackbar.Snackbar
 import com.nex3z.flowlayout.FlowLayout
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.launch
@@ -157,7 +158,7 @@ class AddProductActivity : AppCompatActivity() {
             UCrop.of(uri, destinationUri)
                 .withOptions(options)
                 .start(this)
-            showImage()
+//            showImage()
         } else {
             Log.d("Photo Picker", "No media selected")
         }
@@ -168,9 +169,28 @@ class AddProductActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
             val resultUri = data?.let { UCrop.getOutput(it) }
-            resultUri?.let {
-                currentImageUri = resultUri
-                showImage()
+            resultUri?.let {Uri ->
+                val imageFile = uriToFile(Uri, this).reduceFileImage()
+                val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+                val multipartBody = MultipartBody.Part.createFormData(
+                    "file",
+                    imageFile.name,
+                    requestImageFile
+                )
+                lifecycleScope.launch {
+                    viewModel.predictImage(multipartBody)
+                    viewModel.predictionResult.observe(this@AddProductActivity){
+                        if (it.decision == "reject"){
+                            Snackbar.make(
+                                binding.mainAdd, "Gambar mengandung elemen yang terlarang",
+                                Snackbar.LENGTH_LONG).setAction("Action", null
+                            ).show()
+                        }else if (it.decision == "accept"){
+                            currentImageUri = Uri
+                            showImage()
+                        }
+                    }
+                }
             }
         } else if (resultCode == UCrop.RESULT_ERROR) {
             val cropError = UCrop.getError(data!!)
