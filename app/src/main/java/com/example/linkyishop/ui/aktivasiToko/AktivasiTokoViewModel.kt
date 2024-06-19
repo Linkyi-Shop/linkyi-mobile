@@ -103,4 +103,10 @@ class AktivasiTokoViewModel(private val repository: UserRepository) : ViewModel(
            }
         }
     }
+
+    fun deleteUserToken() {
+        viewModelScope.launch {
+            repository.deleteToken()
+        }
+    }
 }

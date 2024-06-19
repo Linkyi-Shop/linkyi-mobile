@@ -53,10 +53,4 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
             repository.getUserToken()
         }
     }
-
-    fun deleteUserToken() {
-        viewModelScope.launch {
-            repository.deleteToken()
-        }
-    }
 }
