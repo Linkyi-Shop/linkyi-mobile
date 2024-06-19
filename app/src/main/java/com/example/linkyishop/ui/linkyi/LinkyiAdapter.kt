@@ -4,20 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.linkyishop.R
-import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.data.retrofit.response.DataItem
 import com.example.linkyishop.data.retrofit.response.Links
 import com.example.linkyishop.data.retrofit.response.LinksDataItem
-import com.example.linkyishop.data.retrofit.response.LinksItem
 import com.example.linkyishop.databinding.LinkyiCardBinding
-import com.example.linkyishop.ui.detailProduct.DetailProductActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class LinkyiAdapter(

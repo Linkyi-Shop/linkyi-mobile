@@ -3,9 +3,11 @@ package com.example.linkyishop.data.retrofit.api
 import com.example.linkyishop.data.retrofit.response.AddLinkyiResponse
 import com.example.linkyishop.data.retrofit.response.AktivasiTokoResponse
 import com.example.linkyishop.data.retrofit.response.CekUsernameResponse
+import com.example.linkyishop.data.retrofit.response.CheckEmailResponse
 import com.example.linkyishop.data.retrofit.response.DashboardResponse
 import com.example.linkyishop.data.retrofit.response.DeleteProductResponse
 import com.example.linkyishop.data.retrofit.response.DetailProductResponse
+import com.example.linkyishop.data.retrofit.response.KategoriResponse
 import com.example.linkyishop.data.retrofit.response.LinkyiDetailResponse
 import com.example.linkyishop.data.retrofit.response.LinkyiResponse
 import com.example.linkyishop.data.retrofit.response.LoginResponse
@@ -228,4 +230,14 @@ interface ApiServices {
     suspend fun getStoreProfile(
         @Header("Authorization") token: String
     ): ProfileResponse
+
+    @GET("dashboard/product/category")
+    suspend fun getCategory(
+        @Header("Authorization") token: String
+    ): KategoriResponse
+    @FormUrlEncoded
+    @POST("auth/check-email-available")
+    suspend fun checkEmail(
+        @Field("email") email: String
+    ): CheckEmailResponse
 }

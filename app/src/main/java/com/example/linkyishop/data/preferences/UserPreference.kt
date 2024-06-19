@@ -39,7 +39,18 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     }
 
     suspend fun getUserToken(): String {
-        return getUser().first().token
+        val preferences = dataStore.data.first()
+        return preferences[TOKEN_KEY] ?: ""
+    }
+
+    suspend fun getUserStatus(): Boolean {
+        val preferences = dataStore.data.first()
+        return preferences[IS_ACTIVE] ?: false
+    }
+
+    suspend fun getUserEmail(): String {
+        val preferences = dataStore.data.first()
+        return preferences[EMAIL_KEY] ?: ""
     }
     suspend fun deleteToken() {
         dataStore.edit { preferences ->

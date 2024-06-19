@@ -142,6 +142,46 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
+                        <RelativeLayout
+                            android:id="@+id/category"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:id="@+id/ivCategory"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp" />
+
+                            <TextView
+                                android:id="@+id/tvCategory"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_toEndOf="@id/ivCategory"
+                                android:text="@string/category"
+                                android:textAppearance="?textAppearanceTitleSmall" />
+
+                            <ImageView
+                                android:id="@+id/icRightCategory"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_alignBottom="@+id/tvCategory"
+                                android:layout_alignParentEnd="true"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:src="@drawable/baseline_right_arrow_24" />
+                        </RelativeLayout>
+
+                        <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
                         <!-- About -->
                         <RelativeLayout
                             android:id="@+id/updatePassword"
