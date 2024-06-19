@@ -20,6 +20,7 @@ import com.example.linkyishop.data.retrofit.response.RegisterResponse
 import com.example.linkyishop.data.retrofit.response.ResendOtpResponse
 import com.example.linkyishop.data.retrofit.response.UpdatePasswordResponse
 import com.example.linkyishop.data.retrofit.response.UpdateProductResponse
+import com.example.linkyishop.data.retrofit.response.UpdateTokoResponse
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -94,6 +95,14 @@ class UserRepository private constructor(private val pref: UserPreference, priva
         return apiServices.updateProduct("Bearer ${getUserToken()}", productId, title, price, category, thumbnail)
     }
 
+    suspend fun updateStore(
+        name: RequestBody,
+        description: RequestBody,
+        logo: MultipartBody.Part
+    ): UpdateTokoResponse {
+        return apiServices.updateStore("Bearer ${getUserToken()}", name, description, logo)
+    }
+
     suspend fun addProduct(
         title: RequestBody,
         price: RequestBody,
@@ -111,7 +120,7 @@ class UserRepository private constructor(private val pref: UserPreference, priva
         return apiServices.productStatus("Bearer ${getUserToken()}", productId, isActive)
     }
     suspend fun getStoreProfile(): ProfileResponse {
-        return apiServices.getStoreProfile()
+        return apiServices.getStoreProfile("Bearer ${getUserToken()}")
     }
     suspend fun updatePassword(
         password: String,

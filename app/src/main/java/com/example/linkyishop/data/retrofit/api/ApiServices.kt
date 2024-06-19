@@ -1,9 +1,9 @@
 package com.example.linkyishop.data.retrofit.api
 
 import com.example.linkyishop.data.retrofit.response.AddLinkyiResponse
-import com.example.linkyishop.data.retrofit.response.AddProductResponse
 import com.example.linkyishop.data.retrofit.response.AktivasiTokoResponse
 import com.example.linkyishop.data.retrofit.response.CekUsernameResponse
+import com.example.linkyishop.data.retrofit.response.DashboardResponse
 import com.example.linkyishop.data.retrofit.response.DeleteProductResponse
 import com.example.linkyishop.data.retrofit.response.DetailProductResponse
 import com.example.linkyishop.data.retrofit.response.LinkyiDetailResponse
@@ -19,6 +19,7 @@ import com.example.linkyishop.data.retrofit.response.RegisterResponse
 import com.example.linkyishop.data.retrofit.response.ResendOtpResponse
 import com.example.linkyishop.data.retrofit.response.UpdatePasswordResponse
 import com.example.linkyishop.data.retrofit.response.UpdateProductResponse
+import com.example.linkyishop.data.retrofit.response.UpdateTokoResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -208,6 +209,23 @@ interface ApiServices {
         @Part("category") category: RequestBody,
         @Part thumbnail: MultipartBody.Part?
     ): UpdateProductResponse
+
+    @Multipart
+    @POST("dashboard/store/update")
+    suspend fun updateStore(
+        @Header("Authorization") token: String,
+        @Part("name") name: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part logo: MultipartBody.Part
+    ): UpdateTokoResponse
+
+    @GET("dashboard")
+    suspend fun getAnalyzeStore(
+        @Header("Authorization") token: String
+    ): DashboardResponse
+
     @GET("profile")
-    suspend fun getStoreProfile(): ProfileResponse
+    suspend fun getStoreProfile(
+        @Header("Authorization") token: String
+    ): ProfileResponse
 }
