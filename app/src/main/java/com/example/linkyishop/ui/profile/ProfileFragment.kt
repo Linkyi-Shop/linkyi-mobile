@@ -19,7 +19,7 @@ import com.example.linkyishop.ui.aktivasiToko.UpdateStoreActivity
 import com.example.linkyishop.ui.tema.TemaActivity
 import com.example.linkyishop.ui.updatePassword.UpdatePasswordActivity
 import com.example.linkyishop.ui.welcome.WelcomeActivity
-
+import com.example.linkyishop.ui.login.LoginViewModel
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
 
@@ -46,7 +46,7 @@ class ProfileFragment : Fragment() {
         val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
         binding.buttonLogout.setOnClickListener {
-            sharedPreferences.edit().remove("user_token").apply()
+            viewModels.deleteUserToken()
             startActivity(Intent(activity, WelcomeActivity::class.java))
             activity?.finish()
         }
