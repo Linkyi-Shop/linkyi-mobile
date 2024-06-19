@@ -9,6 +9,7 @@ import com.example.linkyishop.di.Injection
 import com.example.linkyishop.ui.aktivasiToko.UpdateStoreViewModel
 import com.example.linkyishop.ui.detailProduct.DetailProductViewModel
 import com.example.linkyishop.ui.linkyi.LinkyiViewModel
+import com.example.linkyishop.ui.listKategori.ListKategoriViewModel
 import com.example.linkyishop.ui.login.LoginViewModel
 import com.example.linkyishop.ui.lupaPassword.LupaPasswordViewModel
 import com.example.linkyishop.ui.main.MainViewModel
@@ -69,6 +70,9 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(TemaViewModel::class.java) -> {
                 TemaViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(ListKategoriViewModel::class.java) -> {
+                ListKategoriViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
