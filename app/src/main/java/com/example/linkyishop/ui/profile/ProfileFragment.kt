@@ -75,10 +75,10 @@ class ProfileFragment : Fragment() {
                     .load(it.logo)
                     .into(binding.ivThumbnail)
 
-//                binding.tvLinks.setOnClickListener {
-//                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(data.link))
-//                    startActivity(intent)
-//                }
+                binding.tvLinks.setOnClickListener {view ->
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("$baseLink${it.link}"))
+                    startActivity(intent)
+                }
             }
         }
         viewModels.getProfile()
