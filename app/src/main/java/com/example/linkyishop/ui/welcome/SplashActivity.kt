@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.linkyishop.R
 import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.data.preferences.UserPreference
+import com.example.linkyishop.databinding.ActivitySplashBinding
 import com.example.linkyishop.ui.login.LoginViewModel
 import com.example.linkyishop.ui.main.MainActivity
 import com.example.linkyishop.ui.otp.OtpVerifActivity
@@ -25,6 +26,7 @@ import kotlinx.coroutines.launch
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySplashBinding
     private lateinit var userPreference: UserPreference
     private val viewModel by viewModels<LoginViewModel> {
         ViewModelFactory.getInstance(this)
@@ -33,7 +35,8 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_splash)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -43,8 +46,13 @@ class SplashActivity : AppCompatActivity() {
         // Initialize UserPreference
         userPreference = UserPreference.getInstance(dataStore)
 
+        binding.ivLogo.alpha = 0f
+        binding.ivLogo.animate().setDuration(2500).alpha(1f).withEndAction {
+            getToken()
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+
         // Get the user token
-        getToken()
     }
 
     private fun getToken() {
