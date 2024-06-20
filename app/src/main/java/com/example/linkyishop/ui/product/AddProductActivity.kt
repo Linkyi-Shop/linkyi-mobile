@@ -64,6 +64,10 @@ class AddProductActivity : AppCompatActivity() {
             }
         }
 
+        with(binding){
+            topAppBar.setNavigationOnClickListener { finish() }
+        }
+
         userPreference = UserPreference.getInstance(dataStore)
 
         binding.galleryButton.setOnClickListener { startGallery() }

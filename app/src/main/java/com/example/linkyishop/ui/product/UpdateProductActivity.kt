@@ -40,6 +40,10 @@ class UpdateProductActivity : AppCompatActivity() {
         binding.btnSelectThumbnail.setOnClickListener { startGallery() }
         binding.btnEditProduk.setOnClickListener { updateProduct() }
 
+        with(binding){
+            topAppBar.setNavigationOnClickListener { finish() }
+        }
+
         observeViewModel()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

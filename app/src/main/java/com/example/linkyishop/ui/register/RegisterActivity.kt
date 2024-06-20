@@ -51,6 +51,7 @@ class RegisterActivity : AppCompatActivity() {
 
             if (validateInput(name, email, password)) {
                 viewModel.checkEmail(email)
+                viewModel.register(name, email, password)
                 true.showLoading()
             }
         }
@@ -64,6 +65,10 @@ class RegisterActivity : AppCompatActivity() {
                     }
                     false -> {
                         // User sudah registrasi tapi belum verifikasi OTP dan aktivasi toko
+                        navigateToOtpScreen(email)
+                    }
+                    true -> {
+                        // User sudah verifikasi OTP tapi belum aktivasi toko
                         navigateToOtpScreen(email)
                     }
                 }
