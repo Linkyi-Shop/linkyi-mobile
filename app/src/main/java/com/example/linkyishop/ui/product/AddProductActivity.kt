@@ -77,6 +77,19 @@ class AddProductActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.predictionResult.observe(this@AddProductActivity){
+            if (it.decision == "accept"){
+                binding.productImage.setImageURI(currentImageUri)
+            }else{
+                binding.productImage.setImageDrawable(ContextCompat.getDrawable(this@AddProductActivity, R.drawable.baseline_preview_image_24))
+                currentImageUri = null
+                Snackbar.make(
+                    binding.mainAdd, "Gambar mengandung elemen yang terlarang",
+                    Snackbar.LENGTH_LONG).setAction("Action", null
+                ).show()
+            }
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.mainAdd) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -157,7 +170,6 @@ class AddProductActivity : AppCompatActivity() {
             UCrop.of(uri, destinationUri)
                 .withOptions(options)
                 .start(this)
-//            showImage()
         } else {
             Log.d("Photo Picker", "No media selected")
         }
@@ -168,29 +180,20 @@ class AddProductActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
             val resultUri = data?.let { UCrop.getOutput(it) }
-            resultUri?.let {Uri ->
-                val imageFile = uriToFile(Uri, this).reduceFileImage()
-                val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
-                val multipartBody = MultipartBody.Part.createFormData(
-                    "file",
-                    imageFile.name,
-                    requestImageFile
-                )
-                lifecycleScope.launch {
+                if (resultUri != null){
+                    val imageFile = uriToFile(resultUri, this).reduceFileImage()
+                    val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+                    val multipartBody = MultipartBody.Part.createFormData(
+                        "file",
+                        imageFile.name,
+                        requestImageFile
+                    )
                     viewModel.predictImage(multipartBody)
-                    viewModel.predictionResult.observe(this@AddProductActivity){
-                        if (it.decision == "reject"){
-                            Snackbar.make(
-                                binding.mainAdd, "Gambar mengandung elemen yang terlarang",
-                                Snackbar.LENGTH_LONG).setAction("Action", null
-                            ).show()
-                        }else if (it.decision == "accept"){
-                            currentImageUri = Uri
-                            showImage()
-                        }
-                    }
+                    currentImageUri = resultUri
+                }else{
+                    binding.productImage.setImageDrawable(ContextCompat.getDrawable(this@AddProductActivity, R.drawable.baseline_preview_image_24))
+                    currentImageUri = null
                 }
-            }
         } else if (resultCode == UCrop.RESULT_ERROR) {
             val cropError = UCrop.getError(data!!)
             cropError?.let {
@@ -207,17 +210,20 @@ class AddProductActivity : AppCompatActivity() {
 
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.TakePicture()
-    ) { isSuccess ->
-        if (isSuccess) {
-            showImage()
-        }
-    }
-
-    private fun showImage() {
-        currentImageUri?.let {
-            Log.d("Image URI", "showImage: $it")
-            binding.productImage.setImageURI(it)
-        }
+    ) {
+            val timeStamp = System.currentTimeMillis()
+            val destinationFileName = "cropped_image_$timeStamp.jpg"
+            val destinationUri = Uri.fromFile(File(cacheDir, destinationFileName))
+            val options = UCrop.Options().apply {
+                setCompressionFormat(Bitmap.CompressFormat.JPEG)
+                setCompressionQuality(80)
+                setToolbarColor(ContextCompat.getColor(this@AddProductActivity, R.color.md_theme_primary))
+                setToolbarWidgetColor(ContextCompat.getColor(this@AddProductActivity, R.color.md_theme_onTertiary))
+                setActiveControlsWidgetColor(ContextCompat.getColor(this@AddProductActivity, R.color.md_theme_primary))
+            }
+            UCrop.of(currentImageUri!!, destinationUri)
+                .withOptions(options)
+                .start(this)
     }
 
     private fun submitProduct() {
