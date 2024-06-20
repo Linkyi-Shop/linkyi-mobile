@@ -6,9 +6,11 @@ import com.example.linkyishop.data.retrofit.api.ApiServices
 import com.example.linkyishop.data.retrofit.response.AddLinkyiResponse
 import com.example.linkyishop.data.retrofit.response.AktivasiTokoResponse
 import com.example.linkyishop.data.retrofit.response.CekUsernameResponse
+import com.example.linkyishop.data.retrofit.response.CheckEmailResponse
 import com.example.linkyishop.data.retrofit.response.DashboardResponse
 import com.example.linkyishop.data.retrofit.response.DeleteProductResponse
 import com.example.linkyishop.data.retrofit.response.DetailProductResponse
+import com.example.linkyishop.data.retrofit.response.KategoriResponse
 import com.example.linkyishop.data.retrofit.response.LinkyiDetailResponse
 import com.example.linkyishop.data.retrofit.response.LinkyiResponse
 import com.example.linkyishop.data.retrofit.response.LupaPasswordResponse
@@ -39,6 +41,10 @@ class UserRepository private constructor(private val pref: UserPreference, priva
     }
     suspend fun getLinkyi(): LinkyiResponse {
         return apiServices.getLinkyi("Bearer ${pref.getUserToken()}")
+    }
+
+    suspend fun getCategory(): KategoriResponse {
+        return apiServices.getCategory("Bearer ${pref.getUserToken()}")
     }
 
     suspend fun getAnalyze(): DashboardResponse {
@@ -78,6 +84,10 @@ class UserRepository private constructor(private val pref: UserPreference, priva
 
     suspend fun checkUsername(username: String): CekUsernameResponse {
         return apiServices.checkUsername("Bearer ${pref.getUserToken()}",username)
+    }
+
+    suspend fun checkEmail(email: String): CheckEmailResponse {
+        return apiServices.checkEmail(email)
     }
     suspend fun activateStore(
         name: RequestBody,

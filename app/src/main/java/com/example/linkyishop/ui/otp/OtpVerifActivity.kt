@@ -78,6 +78,7 @@ class OtpVerifActivity : AppCompatActivity() {
                     it.message ?: getString(R.string.otp_resent),
                     Toast.LENGTH_SHORT
                 ).show()
+                false.showLoading()
             }.onFailure {
                 // Tampilkan pesan error
                 showError(it.message)

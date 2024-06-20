@@ -30,7 +30,7 @@ class TemaActivity : AppCompatActivity() {
         binding.topAppBar.setOnClickListener {
             val intent = Intent(this@TemaActivity, MainActivity::class.java)
             startActivity(intent)
-            finish() 
+            finish()
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

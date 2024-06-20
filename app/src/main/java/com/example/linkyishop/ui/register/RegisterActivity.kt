@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.linkyishop.R
 import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.databinding.ActivityRegisterBinding
+import com.example.linkyishop.ui.aktivasiToko.AktivasiTokoActivity
 import com.example.linkyishop.ui.login.LoginActivity
 import com.example.linkyishop.ui.otp.OtpVerifActivity
 
@@ -49,22 +50,36 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.passwordEditText.text.toString().trim()
 
             if (validateInput(name, email, password)) {
-                viewModel.register(name, email, password)
+                viewModel.checkEmail(email)
                 true.showLoading()
+            }
+        }
+
+        viewModel.emailCheckResult.observe(this) { result ->
+            result.onSuccess { response ->
+                when (response.data?.status) {
+                    null -> {
+                        // User sudah melakukan verifikasi OTP dan aktivasi toko
+                        showError("Email sudah digunakan. Silakan masuk.")
+                    }
+                    false -> {
+                        // User sudah registrasi tapi belum verifikasi OTP dan aktivasi toko
+                        navigateToOtpScreen(email)
+                    }
+                }
+            }.onFailure {
+                showError(it.message)
             }
         }
 
         viewModel.registerResult.observe(this) { result ->
             result.onSuccess { response ->
                 if (response.success == true) {
-                    // Tidak perlu memeriksa registerResult.email karena data adalah array kosong
-                    navigateToOtpScreen(email)  // Ubah navigasi ke OTP tanpa parameter email
+                    navigateToOtpScreen(email)
                 } else {
-                    // Registrasi gagal
                     showError(response.message ?: "Registration failed. Please try again.")
                 }
             }.onFailure {
-                // Tampilkan pesan error
                 showError(it.message)
             }
         }

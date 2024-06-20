@@ -16,10 +16,10 @@ import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.databinding.FragmentProfileBinding
 import com.example.linkyishop.ui.aktivasiToko.AktivasiTokoViewModel
 import com.example.linkyishop.ui.aktivasiToko.UpdateStoreActivity
+import com.example.linkyishop.ui.listKategori.ListKategoriActivity
 import com.example.linkyishop.ui.tema.TemaActivity
 import com.example.linkyishop.ui.updatePassword.UpdatePasswordActivity
 import com.example.linkyishop.ui.welcome.WelcomeActivity
-import com.example.linkyishop.ui.login.LoginViewModel
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
 
@@ -43,8 +43,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-
         binding.buttonLogout.setOnClickListener {
             viewModels.deleteUserToken()
             startActivity(Intent(activity, WelcomeActivity::class.java))
@@ -63,6 +61,10 @@ class ProfileFragment : Fragment() {
 
         binding.updatePassword.setOnClickListener {
             startActivity(Intent(activity, UpdatePasswordActivity::class.java))
+        }
+
+        binding.category.setOnClickListener {
+            startActivity(Intent(activity, ListKategoriActivity::class.java))
         }
 
         viewModels.profileResult.observe(viewLifecycleOwner) { data ->

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -14,14 +15,20 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
 import com.example.linkyishop.R
+import com.example.linkyishop.data.ViewModelFactory
 import com.example.linkyishop.data.preferences.UserPreference
+import com.example.linkyishop.ui.login.LoginViewModel
 import com.example.linkyishop.ui.main.MainActivity
+import com.example.linkyishop.ui.otp.OtpVerifActivity
 import kotlinx.coroutines.launch
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     private lateinit var userPreference: UserPreference
+    private val viewModel by viewModels<LoginViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +51,12 @@ class SplashActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val token = userPreference.getUserToken()
-                if (token == ""){
+//                val status = userPreference.getUserStatus()
+//                val email = userPreference.getUserEmail()
+
+                if (token.isEmpty()){
                     startActivity(Intent(this@SplashActivity, WelcomeActivity::class.java))
+//                    intent.putExtra(OtpVerifActivity.EXTRA_EMAIL, email)
                     finish()
                 }else{
                     startActivity(Intent(this@SplashActivity, MainActivity::class.java))
