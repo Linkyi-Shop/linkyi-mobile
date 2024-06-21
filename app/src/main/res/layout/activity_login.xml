@@ -131,23 +131,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/loginButton" />
 
-    <Button
-        android:id="@+id/loginGoogleButton"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="32dp"
-        android:drawableLeft="@drawable/ic_baseline_google_24"
-        android:drawablePadding="8dp"
-        android:paddingStart="32dp"
-        android:paddingEnd="16dp"
-        android:text="@string/login_with_google"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginButton"
-        tools:alpha="100" />
-
     <TextView
         android:id="@+id/dontHaveAccountTextView"
         android:layout_width="wrap_content"
@@ -156,7 +139,7 @@
         android:text="@string/dont_have_account"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@id/loginGoogleButton"
+        app:layout_constraintTop_toBottomOf="@id/horizontalDivider"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -169,7 +152,7 @@
         android:textColor="@color/md_theme_primary"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/dontHaveAccountTextView"
-        app:layout_constraintTop_toBottomOf="@id/loginGoogleButton"
+        app:layout_constraintTop_toBottomOf="@id/horizontalDivider"
         tools:ignore="MissingConstraints" />
 
     <ProgressBar
