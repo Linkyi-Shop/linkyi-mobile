@@ -32,10 +32,8 @@ class UpdatePasswordActivity : AppCompatActivity() {
 
         observeUpdatePassword()
 
-        binding.topAppBar.setOnClickListener {
-            val intent = Intent(this@UpdatePasswordActivity, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+        with(binding){
+            topAppBar.setNavigationOnClickListener { finish() }
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

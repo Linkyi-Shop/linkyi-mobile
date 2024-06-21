@@ -48,10 +48,8 @@ class ListKategoriActivity : AppCompatActivity() {
 
         viewModel.fetchCategories()
 
-        binding.topAppBar.setOnClickListener {
-            val intent = Intent(this@ListKategoriActivity, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+        with(binding){
+            topAppBar.setNavigationOnClickListener { finish() }
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainKategori)) { v, insets ->

@@ -50,6 +50,10 @@ class UpdateProductActivity : AppCompatActivity() {
         binding.btnSelectThumbnail.setOnClickListener { startGallery() }
         binding.btnEditProduk.setOnClickListener { updateProduct() }
 
+        with(binding){
+            topAppBar.setNavigationOnClickListener { finish() }
+        }
+
         observeViewModel()
         addViewModel.predictionResult.observe(this@UpdateProductActivity){
             if (it.decision == "accept"){
