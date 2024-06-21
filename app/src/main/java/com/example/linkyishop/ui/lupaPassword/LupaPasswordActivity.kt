@@ -43,7 +43,6 @@ class LupaPasswordActivity : AppCompatActivity() {
 
             if (isValidEmail(email)) {
                 viewModel.lupaPassword(email)
-                true.showLoading()
             } else {
                 Toast.makeText(this, "Email tidak valid", Toast.LENGTH_SHORT).show()
             }
@@ -52,6 +51,7 @@ class LupaPasswordActivity : AppCompatActivity() {
         viewModel.lupaPasswordResult.observe(this) { result ->
             when (result) {
                 is LupaPasswordViewModel.LupaPasswordResult.Success -> {
+                    true.showLoading()
                     navigateToNewPassword()
                 }
 

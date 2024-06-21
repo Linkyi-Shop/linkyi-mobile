@@ -218,8 +218,8 @@ interface ApiServices {
     suspend fun updateStore(
         @Header("Authorization") token: String,
         @Part("name") name: RequestBody,
-        @Part("description") description: RequestBody,
-        @Part logo: MultipartBody.Part
+        @Part("description") description: RequestBody?,
+        @Part logo: MultipartBody.Part?
     ): UpdateTokoResponse
 
     @GET("dashboard")

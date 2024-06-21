@@ -16,8 +16,8 @@ class UpdateStoreViewModel(private val repository: UserRepository): ViewModel() 
 
     fun updateStore(
         name: RequestBody,
-        description: RequestBody,
-        logo: MultipartBody.Part
+        description: RequestBody?,
+        logo: MultipartBody.Part?
     ) {
         viewModelScope.launch {
             try {
