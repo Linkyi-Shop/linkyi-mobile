@@ -14,15 +14,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.linkyishop.R
 import com.example.linkyishop.data.ViewModelFactory
-import com.example.linkyishop.databinding.ActivityLoginBinding
 import com.example.linkyishop.databinding.ActivityUpdateStoreBinding
-import com.example.linkyishop.ui.login.LoginViewModel
 import com.example.linkyishop.ui.main.MainActivity
 import com.example.linkyishop.ui.product.asRequestBody
 import com.example.linkyishop.ui.product.reduceFileImage
 import com.example.linkyishop.ui.product.toRequestBody
 import com.example.linkyishop.ui.product.uriToFile
-import com.example.linkyishop.ui.profile.ProfileFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 
@@ -69,7 +66,7 @@ class UpdateStoreActivity : AppCompatActivity() {
             null
         }
 
-        viewModel.updateStore(name, description!!, selectedLogo!!)
+        viewModel.updateStore(name, description, selectedLogo)
     }
 
     private fun observeViewModel() {

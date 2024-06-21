@@ -110,8 +110,8 @@ class UserRepository private constructor(private val pref: UserPreference, priva
 
     suspend fun updateStore(
         name: RequestBody,
-        description: RequestBody,
-        logo: MultipartBody.Part
+        description: RequestBody?,
+        logo: MultipartBody.Part?
     ): UpdateTokoResponse {
         return apiServices.updateStore("Bearer ${getUserToken()}", name, description, logo)
     }

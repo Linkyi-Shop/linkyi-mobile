@@ -42,7 +42,6 @@ class NewPasswordActivity : AppCompatActivity() {
 
             if (isValidInput(password, confirmPassword, otp)) {
                 viewModel.changePassword(password, confirmPassword, otp)
-                true.showLoading()
             } else {
                 Toast.makeText(this, "Input tidak valid", Toast.LENGTH_SHORT).show()
             }
@@ -50,6 +49,7 @@ class NewPasswordActivity : AppCompatActivity() {
 
         viewModel.passwordChanged.observe(this, Observer { changed ->
             if (changed) {
+                true.showLoading()
                 Toast.makeText(this, "Password berhasil diubah", Toast.LENGTH_SHORT).show()
                 navigateToLogin()
             } else {
